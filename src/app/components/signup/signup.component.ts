@@ -17,10 +17,11 @@ import Swal from 'sweetalert2';
 export class SignupComponent implements OnInit {
 
   formPersona: FormGroup;
-  formRol: FormGroup;
   formUsuario: FormGroup;
   personaCreated = new Array<string>();
   rolCreated = new Array<string>();
+  usuarioExists = new Array<string>();
+  formPersonaDisabled: boolean;
 
   constructor(private fb: FormBuilder , private personaService: PersonaService, private rolService: RolService, public validateService: ValidationService, private router: Router) {
 
@@ -33,11 +34,6 @@ export class SignupComponent implements OnInit {
       direccion: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       nivelEstudios: ["Seleccione su nivel de estudios", [Validators.required]],
       tipoUsuario: ["Seleccione su rol", [Validators.required]],
-      
-    });
-
-    this.formRol = this.fb.group({
-      tipoUsuario: ["Seleccione su rol", [Validators.required]]
     });
 
     this.formUsuario = this.fb.group({
@@ -45,12 +41,14 @@ export class SignupComponent implements OnInit {
       clave: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
     });
 
+    this.formPersonaDisabled = false;
   }
 
   ngOnInit(): void {
   }
 
   createPersona () {
+
     const persona: Persona = {
       cedula: this.formPersona.get("cedula")?.value,
       nombre: this.formPersona.get("nombre")?.value,
@@ -58,22 +56,55 @@ export class SignupComponent implements OnInit {
       telefono: this.formPersona.get("telefono")?.value,
       correo: this.formPersona.get("correo")?.value,
       direccion: this.formPersona.get("direccion")?.value,
-      nivelEstudios: this.formPersona.get("nivelEstudios")?.value
+      nivelEstudios: this.formPersona.get("nivelEstudios")?.value,
+    }
+
+    const rol: Rol = {
+      tipoUsuario: this.formPersona.get("tipoUsuario")?.value
     }
     
+
     this.personaService.createPersona(persona)
       .subscribe({
         next:  res => {
           console.log(res);
           this.personaCreated = Object.values(res);
           console.log(this.personaCreated[0]);
-          Swal.fire({
-            title: 'Datos Personales',
-            text: 'Datos Personales Gurdados Con Exito',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 2000
-          });
+          if (this.personaCreated[0] === persona.cedula) {
+            Swal.fire({
+              title: 'Cedula ¡Invalida!',
+              text: `Ya existe una persona registrado con cedula: ${persona.cedula}` ,
+              icon: 'info',
+              showConfirmButton: true,
+            });
+          }
+          else {
+
+            this.rolService.createRol(rol)
+              .subscribe({
+                next: res => {
+                  console.log(res);
+                  this.rolCreated = Object.values(res);
+                  console.log(this.rolCreated[0]);
+                  Swal.fire({
+                    title: 'Datos personales ¡Registrados!',
+                    text: 'Datos personales registrados con ¡Exito!',
+                    icon: 'success',
+                    showConfirmButton: true,
+                  });
+
+                  this.formPersona.reset();
+                  this.formPersona.disable();
+                  if(this.formPersona.disabled){
+                    this.formPersonaDisabled = true
+                  }
+                },
+                error: err => {
+                  console.error(err);
+                }
+              });
+
+          }
         },
         error: err =>{
           console.error(err);
@@ -81,32 +112,7 @@ export class SignupComponent implements OnInit {
       })
   }
 
-  createRol () {
-    const rol: Rol = {
-      tipoUsuario: this.formRol.get("tipoUsuario")?.value
-    }
-
-    this.rolService.createRol(rol)
-      .subscribe({
-        next: res => {
-          console.log(res);
-          this.rolCreated = Object.values(res);
-          console.log(this.rolCreated[0]);
-          Swal.fire({
-            title: 'Rol Asignado',
-            text: 'Rol Asignado Con Exito',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 2000
-          });
-        },
-        error: err => {
-          console.error(err);
-        }
-      });
-  
-  }
-
+ 
   signUp(){
     
     const usuario: Usuario = {
@@ -120,19 +126,33 @@ export class SignupComponent implements OnInit {
       .subscribe({
         next: res => {
           console.log(res);
-          localStorage.setItem("token", res.token);
-          Swal.fire({
-            title: 'Usuario Registrado',
-            text: 'Usuario Registrado Con Exito',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          this.router.navigate(["/login"]);
+          this.usuarioExists = Object.values(res);
+          console.log(this.usuarioExists[0]);
+          
+          if (this.usuarioExists[0] === usuario.nombreUsuario) {
+            Swal.fire({
+              title: 'Nombre de usuario ¡Invalido!',
+              text: `Ya existe un usuario registrado como: ${usuario.nombreUsuario}` ,
+              icon: 'info',
+              showConfirmButton: true,
+            });
+          }
+          else {
+            localStorage.setItem("token", res.token);
+            Swal.fire({
+              title: 'Usuario Registrado',
+              text: 'Usuario Registrado Con ¡Exito!',
+              icon: 'success',
+              showConfirmButton: true,
+            });
+            this.router.navigate(["/vehiculos"]);
+            }
+          
         },
         error: err =>{
           console.error(err);
         }
       })
   }
+
 }
