@@ -20,6 +20,7 @@ export class SignupComponent implements OnInit {
   formUsuario: FormGroup;
   personaCreated = new Array<string>();
   rolCreated = new Array<string>();
+  rolesList = new Array<Rol>();
   usuarioExists = new Array<string>();
   formPersonaDisabled: boolean;
 
@@ -32,11 +33,11 @@ export class SignupComponent implements OnInit {
       telefono: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
       correo: ["", [Validators.required, Validators.email]],
       direccion: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
-      nivelEstudios: ["Seleccione su nivel de estudios", [Validators.required]],
-      tipoUsuario: ["Seleccione su rol", [Validators.required]],
+      nivelEstudios: ["Seleccione su nivel de estudios"],
     });
 
     this.formUsuario = this.fb.group({
+      tipoUsuario: ["Seleccione el tipo de usuario"],
       nombreUsuario: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       clave: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
     });
@@ -59,11 +60,6 @@ export class SignupComponent implements OnInit {
       nivelEstudios: this.formPersona.get("nivelEstudios")?.value,
     }
 
-    const rol: Rol = {
-      tipoUsuario: this.formPersona.get("tipoUsuario")?.value
-    }
-    
-
     this.personaService.createPersona(persona)
       .subscribe({
         next:  res => {
@@ -80,36 +76,41 @@ export class SignupComponent implements OnInit {
           }
           else {
 
-            this.rolService.createRol(rol)
-              .subscribe({
-                next: res => {
-                  console.log(res);
-                  this.rolCreated = Object.values(res);
-                  console.log(this.rolCreated[0]);
-                  Swal.fire({
-                    title: 'Datos personales ¡Registrados!',
-                    text: 'Datos personales registrados con ¡Exito!',
-                    icon: 'success',
-                    showConfirmButton: true,
-                  });
+            this.formPersona.reset();
+            this.formPersona.disable();
+            if(this.formPersona.disabled){
+              this.formPersonaDisabled = true
+            }
 
-                  this.formPersona.reset();
-                  this.formPersona.disable();
-                  if(this.formPersona.disabled){
-                    this.formPersonaDisabled = true
-                  }
-                },
-                error: err => {
-                  console.error(err);
-                }
-              });
+            Swal.fire({
+              title: 'Datos personales ¡Registrados!',
+              text: 'Datos personales registrados con ¡Exito!',
+              icon: 'success',
+              showConfirmButton: true,
+            });
 
+            this.listRoles();
+            
           }
         },
         error: err =>{
           console.error(err);
         }
       })
+  }
+
+  listRoles(){
+    this.rolService.getRoles()
+    .subscribe({
+      next: res => {
+        console.log(res);
+        this.rolesList = res;
+      },
+      error: err => {
+        console.error(err);
+      }
+
+    });
   }
 
  
@@ -119,7 +120,7 @@ export class SignupComponent implements OnInit {
       nombreUsuario: this.formUsuario.get("nombreUsuario")?.value,
       clave: this.formUsuario.get("clave")?.value,
       idPersona: this.personaCreated[0],
-      idRol: this.rolCreated[0]
+      idRol: this.formUsuario.get("tipoUsuario")?.value
     }
 
     this.validateService.signUp(usuario)
@@ -141,7 +142,7 @@ export class SignupComponent implements OnInit {
             localStorage.setItem("token", res.token);
             Swal.fire({
               title: 'Usuario Registrado',
-              text: 'Usuario Registrado Con ¡Exito!',
+              text: 'Usuario Registrado ¡Exitosamente!',
               icon: 'success',
               showConfirmButton: true,
             });

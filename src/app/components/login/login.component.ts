@@ -40,13 +40,18 @@ export class LoginComponent implements OnInit {
             title: 'Inicio De Sesión',
             text: 'El Usuario A Iniciado Sesión con Exito',
             icon: 'success',
-            showConfirmButton: false,
-            timer: 2000
+            showConfirmButton: true,
           });
           this.router.navigate(["/vehiculos"]);
         },
         error: err =>{
           console.error(err);
+          Swal.fire({
+            title: 'Usuario ¡Invalido!',
+            text: 'El nombre de usuario o la contraseña es ¡Incorrecto(a)!',
+            icon: 'error',
+            showConfirmButton: true,
+          });
         }
       })
   }

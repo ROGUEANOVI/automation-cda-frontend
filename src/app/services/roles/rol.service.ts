@@ -15,4 +15,8 @@ export class RolService {
   createRol(rol: Rol): Observable<Object>{
     return this.http.post<Object>(this.URL + "/roles", rol);
   }
+
+  getRoles(): Observable<Rol[]>{
+    return this.http.get<Rol[]>(this.URL + "/roles");
+  }
 }

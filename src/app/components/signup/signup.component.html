@@ -92,19 +92,7 @@
                           <option value="posgrado">Posgrado</option>
                         </select>
                         
-                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('nivelEstudios')?.touched && formPersona.get('nivelEstudios')?.errors?.['required']">Estudios obligatorios</div>
-                      </div>
-
-                      <div class="mb-3">
-                        <select formControlName="tipoUsuario" class="form-select" aria-label="Default select example">
-                          <option selected>Seleccione su rol</option>
-                          <option value="propietario">Propietario</option>
-                          <option value="mecanico">Mecanico</option>
-                          <option value="auxiliar">Auxiliar</option>
-                          <option value="jefe-operacion">Jefe de Operaciones</option>
-                        </select>
-                        
-                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('tipoUsuario')?.touched && formPersona.get('tipoUsuario')?.errors?.['required']">Tipo de usuario obligatorio</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="(formPersona.get('nivelEstudios')?.value === 'Seleccione su nivel de estudios') && formPersona.get('direccion')?.touched " >Seleccione un nivel de estudio valido</div>
                       </div>
                     </div>  
                   </div>
@@ -112,7 +100,7 @@
               </div>
 
               <div class="d-grid gap-2 mt-4">
-                <button [disabled]="formPersona.invalid" type="submit" class="btn btn-success btn-lg">Guardar</button>
+                <button [disabled]="(formPersona.get('nivelEstudios')?.value === 'Seleccione su nivel de estudios') || (formPersona.invalid)" type="submit" class="btn btn-success btn-lg">Guardar</button>
               </div>
               
             </form>
@@ -128,6 +116,15 @@
             <h2><span class="title">Datos de Usuario</span></h2>
                   <form class="mt-3" [formGroup]="formUsuario" (ngSubmit)="signUp()" >
                     
+                    <div class="mb-3">
+                      <select formControlName="tipoUsuario" class="form-select" aria-label="Default select example">
+                        <option selected>Seleccione el tipo de usuario</option>
+                        <option [value]="rol._id" *ngFor="let rol of rolesList">{{rol.tipoUsuario}}</option>
+                      </select>
+                      
+                      <div class="alert alert-danger" role="alert" *ngIf="(formUsuario.get('tipoUsuario')?.value === 'Seleccione el tipo de usuario') && formUsuario.get('tipoUsuario')?.touched">Tipo de usuario obligatorio</div>
+                    </div>
+
                     <div class="mb-3">
                       <input formControlName="nombreUsuario" type="text" class="form-control form-control-lg" placeholder="Nombre de Usuario">
         
@@ -145,7 +142,7 @@
                     </div>
                     
                     <div class="d-grid gap-2 mt-4">
-                      <button [disabled]="formUsuario.invalid" type="submit" class="btn btn-success btn-lg">Regístrate</button>
+                      <button [disabled]="(formUsuario.get('tipoUsuario')?.value === 'Seleccione el tipo de usuario') || formUsuario.invalid" type="submit" class="btn btn-success btn-lg">Regístrate</button>
                     </div>
                   </form>
           </div>
