@@ -1,0 +1,38 @@
+
+<div class="container mt-5">
+  <div class="row justify-content-around align-items-center">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body text-center bg-dark bg-gradient text-white">
+          <h2><span class="title">INICIO DE SESIÓN</span></h2>
+          <p class="mt-3">Inicia sesión en tu cuenta de AutomationCDA</p>
+          <form class="mt-3" [formGroup]="formCredenciales" (ngSubmit)="logIn()" >
+            <div class="mb-3">
+              <input formControlName="_nombreUsuario" type="text" class="form-control form-control-lg" placeholder="Nombre de Usuario">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_nombreUsuario')?.touched && formCredenciales.get('_nombreUsuario')?.errors?.['required']">El nombre de usuario es obligatorio</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_nombreUsuario')?.touched && formCredenciales.get('_nombreUsuario')?.errors?.['minlength']">EL nombre de usuario es de minimo 4 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_nombreUsuario')?.touched && formCredenciales.get('_nombreUsuario')?.errors?.['maxlength']">EL nombre de usuario es de maximo 15 caracteres</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="_clave" type="password" class="form-control form-control-lg" placeholder="Clave">
+              
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_clave')?.touched && formCredenciales.get('_clave')?.errors?.['required']">La clave es obligatoria</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_clave')?.touched && formCredenciales.get('_clave')?.errors?.['minlength']">La clave es de minimo 4 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formCredenciales.get('_clave')?.touched && formCredenciales.get('_clave')?.errors?.['maxlength']">La clave es de maximo 20 caracteres</div>
+            </div>
+            
+            <div class="d-grid gap-2 mt-4">
+              <button [disabled]="formCredenciales.invalid" type="submit" class="btn btn-success btn-lg">Iniciar Sesión</button>
+            </div>
+
+            <div class="mt-4">
+              <p>¿No tienes una cuenta?  <strong><a routerLink="/signup" routerLinkActive="active">Regístrate</a></strong></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

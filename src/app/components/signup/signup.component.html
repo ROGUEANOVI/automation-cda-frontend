@@ -1,0 +1,156 @@
+<div class="container mt-5">
+  <div class="row justify-content-around align-items-center">
+
+    <ng-container *ngIf="!formPersona.disabled; else formularioUsuario" >
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body text-center bg-dark bg-gradient text-white">
+            <h2><span class="title">Datos Personales</span></h2>
+            <form class="mt-3" [formGroup]="formPersona" (ngSubmit)="createPersona()">
+              
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="card">
+                    <div class="card-body text-center bg-dark bg-gradient text-white">
+                      <div class="mb-3">
+                        <input formControlName="cedula" type="text" class="form-control form-control-lg" placeholder="Cedula">
+          
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('cedula')?.touched && formPersona.get('cedula')?.errors?.['required']">La Cedula es obligatoria</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('cedula')?.touched && formPersona.get('cedula')?.errors?.['minlength']">Minimo 7 caracteres</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('cedula')?.touched && formPersona.get('cedula')?.errors?.['maxlength']">Maximo 10 caracteres</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('cedula')?.errors?.['pattern']">La Cedula solo contiene numeros</div>
+                      </div>
+          
+                      <div class="mb-3">
+                        <input formControlName="nombre" type="text" class="form-control form-control-lg" placeholder="nombre">
+          
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('nombre')?.touched && formPersona.get('nombre')?.errors?.['required']">El nombre es obligatorio</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('nombre')?.touched && formPersona.get('nombre')?.errors?.['minlength']">Minimo 3 caracteres</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('nombre')?.touched && formPersona.get('nombre')?.errors?.['maxlength']">Maximo 20 caracteres</div>
+                      </div>
+          
+                      <div class="mb-3">
+                        <input formControlName="apellidos" type="text" class="form-control form-control-lg" placeholder="Apellidos">
+          
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('apellidos')?.touched && formPersona.get('apellidos')?.errors?.['required']">Apellidos obligatorios</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('apellidos')?.touched && formPersona.get('apellidos')?.errors?.['minlength']">Minimo 3 caracteres</div>
+                        <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('apellidos')?.touched && formPersona.get('apellidos')?.errors?.['maxlength']">Maximo 20 caracteres</div>
+                      </div>
+                    </div>  
+                  </div>    
+                </div>
+                
+                    <div class="col-lg-6">
+                      <div class="card">
+                        <div class="card-body text-center bg-dark bg-gradient text-white">
+                          <div class="mb-3">
+                            <input formControlName="telefono" type="text" class="form-control form-control-lg" placeholder="Telefono">
+                            
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('telefono')?.touched && formPersona.get('telefono')?.errors?.['required']">Telefono obligatorio</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('telefono')?.touched && formPersona.get('telefono')?.errors?.['minlength']">10 caracteres exactos</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('telefono')?.touched && formPersona.get('telefono')?.errors?.['maxlength']">10 caracteres exactos</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('telefono')?.errors?.['pattern']">EL telefono solo contiene numeros</div>
+                          </div>  
+                          
+                          <div class="mb-3">
+                            <input formControlName="correo" type="text" class="form-control form-control-lg" placeholder="Correo Electronico">
+                            
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('correo')?.touched && formPersona.get('correo')?.errors?.['required']">El email es obligatorio</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('correo')?.touched && formPersona.get('correo')?.errors?.['email']">EL email NO es valido</div>
+                          </div>
+              
+                          <div class="mb-3">
+                            <input formControlName="direccion" type="text" class="form-control form-control-lg" placeholder="Direccion">
+                            
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('direccion')?.touched && formPersona.get('direccion')?.errors?.['required']">Direccion obligatoria</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('direccion')?.touched && formPersona.get('direccion')?.errors?.['minlength']">Minimo 10 caracteres</div>
+                            <div class="alert alert-danger" role="alert" *ngIf="formPersona.get('direccion')?.touched && formPersona.get('direccion')?.errors?.['maxlength']">Maximo 40 caracteres</div>
+                          </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              &nbsp;
+              &nbsp;
+              &nbsp;
+              &nbsp;
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body text-center bg-dark bg-gradient text-white">
+                      <div class="mb-3">
+                        <select formControlName="nivelEstudios" class="form-select" aria-label="Default select example">
+                          <option selected>Seleccione su nivel de estudios</option>
+                          <option value="primaria">Primaria</option>
+                          <option value="media">Media Basica</option>
+                          <option value="secundaria">Secundaria</option>
+                          <option value="tecnico">Tecnico</option>
+                          <option value="tecnologia">Tecnologia</option>
+                          <option value="pregrado">Pregrado</option>
+                          <option value="posgrado">Posgrado</option>
+                        </select>
+                        
+                        <div class="alert alert-danger" role="alert" *ngIf="(formPersona.get('nivelEstudios')?.value === 'Seleccione su nivel de estudios') && formPersona.get('direccion')?.touched " >Seleccione un nivel de estudio valido</div>
+                      </div>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button [disabled]="(formPersona.get('nivelEstudios')?.value === 'Seleccione su nivel de estudios') || (formPersona.invalid)" type="submit" class="btn btn-success btn-lg">Guardar</button>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #formularioUsuario>
+      <div class="col-lg-10">
+        <div class="card">
+          <div class="card-body text-center bg-dark bg-gradient text-white">
+            <h2><span class="title">Datos de Usuario</span></h2>
+                  <form class="mt-3" [formGroup]="formUsuario" (ngSubmit)="signUp()" >
+                    
+                    <div class="mb-3">
+                      <select formControlName="tipoUsuario" class="form-select" aria-label="Default select example">
+                        <option selected>Seleccione el tipo de usuario</option>
+                        <option [value]="rol._id" *ngFor="let rol of rolesList">{{rol.tipoUsuario}}</option>
+                      </select>
+                      
+                      <div class="alert alert-danger" role="alert" *ngIf="(formUsuario.get('tipoUsuario')?.value === 'Seleccione el tipo de usuario') && formUsuario.get('tipoUsuario')?.touched">Tipo de usuario obligatorio</div>
+                    </div>
+
+                    <div class="mb-3">
+                      <input formControlName="nombreUsuario" type="text" class="form-control form-control-lg" placeholder="Nombre de Usuario">
+        
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('nombreUsuario')?.touched && formUsuario.get('nombreUsuario')?.errors?.['required']">Nombre de usuario obligatorio</div>
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('nombreUsuario')?.touched && formUsuario.get('nombreUsuario')?.errors?.['minlength']">Minimo 4 caracteres</div>
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('nombreUsuario')?.touched && formUsuario.get('nombreUsuario')?.errors?.['maxlength']">Maximo 15 caracteres</div>
+                    </div>
+        
+                    <div class="mb-3">
+                      <input formControlName="clave" type="password" class="form-control form-control-lg" placeholder="Clave">
+                      
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('clave')?.touched && formUsuario.get('clave')?.errors?.['required']">La clave es obligatoria</div>
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('clave')?.touched && formUsuario.get('clave')?.errors?.['minlength']">Minimo 4 caracteres</div>
+                      <div class="alert alert-danger" role="alert" *ngIf="formUsuario.get('clave')?.touched && formUsuario.get('clave')?.errors?.['maxlength']">Maximo 20 caracteres</div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                      <button [disabled]="(formUsuario.get('tipoUsuario')?.value === 'Seleccione el tipo de usuario') || formUsuario.invalid" type="submit" class="btn btn-success btn-lg">Regístrate</button>
+                    </div>
+                  </form>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+  
+
