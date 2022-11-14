@@ -6,33 +6,24 @@ import { TokenInterceptorService } from './services/token-interceptor/token-inte
 
 
 import { AppRoutingModule } from './app-routing.module';
+import { AuthGuard } from './guard/auth.guard';
+
+// COMPONENTS
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/template/home/home.component';
 import { NavBarComponent } from './components/template/nav-bar/nav-bar.component';
 import { FooterComponent } from './components/template/footer/footer.component';
 import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { HomeComponent } from './components/template/home/home.component';
-import { AuthGuard } from './guard/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ListPersonasComponent } from './components/persona/list-personas/list-personas.component';
-import { EditPersonaComponent } from './components/persona/edit-persona/edit-persona.component';
-import { CreatePersonaComponent } from './components/persona/create-persona/create-persona.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    HomeComponent,
     NavBarComponent,
     FooterComponent,
     VehiculosComponent,
-    SignupComponent,
-    HomeComponent,
     NotFoundComponent,
-    ListPersonasComponent,
-    EditPersonaComponent,
-    CreatePersonaComponent,
   ],
   imports: [
     BrowserModule,

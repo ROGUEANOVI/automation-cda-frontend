@@ -42,7 +42,7 @@ export class ListPersonasComponent implements OnInit {
       icon: 'warning'
     }).then(result => {
       if (result.value) {
-        this.router.navigate(["/edit-persona",_id]);
+        this.router.navigate(["/persona/edit-persona",_id]);
       }
 
     }); 

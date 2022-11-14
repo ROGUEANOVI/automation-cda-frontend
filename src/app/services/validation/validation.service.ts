@@ -29,7 +29,7 @@ export class ValidationService {
 
   logOut(){
     localStorage.removeItem("token");
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/validation/login"]);
   }
 
   getToken(){
