@@ -15,6 +15,9 @@ import { SignupComponent } from './components/signup/signup.component';
 import { HomeComponent } from './components/template/home/home.component';
 import { AuthGuard } from './guard/auth.guard';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ListPersonasComponent } from './components/persona/list-personas/list-personas.component';
+import { EditPersonaComponent } from './components/persona/edit-persona/edit-persona.component';
+import { CreatePersonaComponent } from './components/persona/create-persona/create-persona.component';
 
 
 @NgModule({
@@ -27,6 +30,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     SignupComponent,
     HomeComponent,
     NotFoundComponent,
+    ListPersonasComponent,
+    EditPersonaComponent,
+    CreatePersonaComponent,
   ],
   imports: [
     BrowserModule,
