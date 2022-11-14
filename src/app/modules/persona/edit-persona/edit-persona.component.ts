@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Persona } from 'src/app/models/persona';
 import { PersonaService } from 'src/app/services/personas/persona.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-create-persona',
-  templateUrl: './create-persona.component.html',
-  styleUrls: ['./create-persona.component.css']
+  selector: 'app-edit-persona',
+  templateUrl: './edit-persona.component.html',
+  styleUrls: ['./edit-persona.component.css']
 })
-export class CreatePersonaComponent implements OnInit {
-  formPersona: FormGroup;
-  personaCreated = new Array<string>();
-  formPersonaDisabled: boolean;
+export class EditPersonaComponent implements OnInit {
 
-  constructor(private fb: FormBuilder , private personaService: PersonaService, private router: Router) {
+  formPersona: FormGroup;
+  id: string;
+
+  constructor(private fb: FormBuilder , private personaService: PersonaService, private router: Router, private aRouter: ActivatedRoute ) {
 
     this.formPersona = this.fb.group({
       cedula: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
@@ -26,13 +26,14 @@ export class CreatePersonaComponent implements OnInit {
       direccion: ["", [Validators.required, Validators.minLength(10), Validators.maxLength(40)]],
       nivelEstudios: ["Seleccione su nivel de estudios"],
     });
-    this.formPersonaDisabled = false;
+    this.id = this.aRouter.snapshot.paramMap.get("id")!;
   }
 
   ngOnInit(): void {
+    this.loadDataForm()
   }
 
-  createPersona(){
+  editPersona(){
     const persona: Persona = {
       cedula: this.formPersona.get("cedula")?.value,
       nombre: this.formPersona.get("nombre")?.value,
@@ -43,36 +44,19 @@ export class CreatePersonaComponent implements OnInit {
       nivelEstudios: this.formPersona.get("nivelEstudios")?.value,
     }
 
-    this.personaService.createPersona(persona)
+    this.personaService.editPersona(this.id, persona)
       .subscribe({
         next:  res => {
           console.log(res);
-          this.personaCreated = Object.values(res);
-          console.log(this.personaCreated[0]);
-          if (this.personaCreated[0] === persona.cedula) {
-            Swal.fire({
-              title: 'Cedula ¡Invalida!',
-              text: `Ya existe una persona registrado con cedula: ${persona.cedula}` ,
-              icon: 'info',
-              showConfirmButton: true,
-            });
-          }
-          else {
+          this.formPersona.reset();
+          this.router.navigate(["/list-personas"]);
 
-            this.formPersona.reset();
-            this.formPersona.disable();
-            if(this.formPersona.disabled){
-              this.formPersonaDisabled = true
-            }
-
-            Swal.fire({
-              title: 'Datos personales ¡Registrados!',
-              text: 'Datos personales registrados con ¡Exito!',
-              icon: 'success',
-              showConfirmButton: true,
-            });
-            
-          }
+          Swal.fire({
+            title: 'Datos personales ¡Actualizados!',
+            text: 'Datos personales actualizados con ¡Exito!',
+            icon: 'success',
+            showConfirmButton: true,
+          });
         },
         error: err =>{
           console.error(err);
@@ -80,7 +64,27 @@ export class CreatePersonaComponent implements OnInit {
       })
   }
 
-  volver(){
-    this.router.navigate(["/list-personas"]);
+  loadDataForm(){
+    if(this.id !== null){
+      
+      this.personaService.getPersona(this.id).subscribe(
+        res => {
+          this.formPersona.setValue({
+            cedula: res.cedula,
+            nombre: res.nombre,
+            apellidos: res.apellidos,
+            telefono: res.telefono,
+            correo: res.correo,
+            direccion: res.direccion,
+            nivelEstudios: res.nivelEstudios
+          });
+        }
+      );
+    }
   }
+
+  volver(){
+    this.router.navigate(["/persona/list-personas"]);
+  }
+
 }

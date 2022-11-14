@@ -1,25 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { NotFoundComponent } from './components/not-found/not-found.component';
-import { CreatePersonaComponent } from './components/persona/create-persona/create-persona.component';
-import { EditPersonaComponent } from './components/persona/edit-persona/edit-persona.component';
-import { ListPersonasComponent } from './components/persona/list-personas/list-personas.component';
-import { SignupComponent } from './components/signup/signup.component';
-import { HomeComponent } from './components/template/home/home.component';
-import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
 import { AuthGuard } from './guard/auth.guard';
+
+import { HomeComponent } from './components/template/home/home.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
 
 
 const routes: Routes = [
 
   {path: "", redirectTo:"/inicio", pathMatch: "full"},
   {path:"inicio", component: HomeComponent},
-  {path: "login", component: LoginComponent},
-  {path: "signup", component: SignupComponent},
-  {path: "create-persona", component: CreatePersonaComponent},
-  {path: "list-personas", component: ListPersonasComponent},
-  {path: "edit-persona/:id", component: EditPersonaComponent},
+  {path: "validation", loadChildren: () => import("./modules/validation/validation.module").then(x => x.ValidationModule)},
+  {path: "persona", loadChildren: () => import("./modules/persona/persona.module").then(x => x.PersonaModule)},
+  {path: "rol", loadChildren: () => import("./modules/rol/rol.module").then(x => x.RolModule)},
+  {path: "usuario", loadChildren: () => import("./modules/usuario/usuario.module").then(x => x.UsuarioModule)},
+  {path: "vehiculo", loadChildren: () => import("./modules/vehiculo/vehiculo.module").then(x => x.VehiculoModule)},
   {path: "vehiculos", component: VehiculosComponent, canActivate: [AuthGuard]},
   {path: "**", component: NotFoundComponent}
 ];
