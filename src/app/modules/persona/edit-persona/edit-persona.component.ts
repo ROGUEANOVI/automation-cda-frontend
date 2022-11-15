@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Persona } from 'src/app/models/persona';
 import { PersonaService } from 'src/app/services/personas/persona.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-persona',
@@ -30,7 +30,7 @@ export class EditPersonaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadDataForm()
+    this.loadDataForm();
   }
 
   editPersona(){
@@ -49,7 +49,7 @@ export class EditPersonaComponent implements OnInit {
         next:  res => {
           console.log(res);
           this.formPersona.reset();
-          this.router.navigate(["/list-personas"]);
+          this.router.navigate(["/persona/list-personas"]);
 
           Swal.fire({
             title: 'Datos personales ¡Actualizados!',

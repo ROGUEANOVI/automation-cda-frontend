@@ -7,7 +7,7 @@ import { ListRolesComponent } from './list-roles/list-roles.component';
 const routes: Routes = [
   {path: "create-rol", component: CreateRolComponent},
   {path: "list-roles", component: ListRolesComponent},
-  {path: "edit-persona/:id", component: EditRolComponent},
+  {path: "edit-rol/:id", component: EditRolComponent},
 ];
 
 @NgModule({

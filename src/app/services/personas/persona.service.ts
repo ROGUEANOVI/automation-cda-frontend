@@ -16,7 +16,7 @@ export class PersonaService {
     return this.http.post<Object>(this.URL , persona)
   }
 
-  listPersonas(): Observable<Persona[]>{
+  getListPersonas(): Observable<Persona[]>{
     return this.http.get<Persona[]>(this.URL)
   }
 

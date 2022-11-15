@@ -1,1 +1,31 @@
-<p>list-roles works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+      <div class="card">
+        <div class="card-body text-center">
+          <h2><span class="title">LISTADO DE ROLES</span></h2>
+          <table *ngIf="listRoles.length > 0" class="table table-striped mt-4">
+            <thead>
+              <tr>
+                <th scope="col">Tipo de usuario</th>
+                
+                <td><button class="btn btn-success btn-lg" routerLink="/rol/create-rol">Agregar Rol</button></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let rol of listRoles">
+                <td>{{rol.tipoUsuario}}</td>
+                <td>
+                  <i (click)="editRol(rol._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+                  <i (click)="deleteRol(rol._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h5 *ngIf="listRoles.length == 0" class="text-center">No hay Roles para mostrar</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

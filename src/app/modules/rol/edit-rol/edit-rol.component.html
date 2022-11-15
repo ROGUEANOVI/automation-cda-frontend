@@ -1,1 +1,34 @@
-<p>edit-rol works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-around align-items-center">
+
+    <ng-container>
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body text-center bg-light bg-gradient text-dark">
+            <h2><span class="title">Crear rol - Tipo de usuario</span></h2>
+            <form class="mt-3" [formGroup]="formRol" (ngSubmit)="editRol()">
+              
+              <div class="mb-3">
+                <input formControlName="tipoUsuario" type="text" class="form-control form-control-lg" placeholder="tipoUsuario">
+  
+                <div class="alert alert-danger" role="alert" *ngIf="formRol.get('tipoUsuario')?.touched && formRol.get('tipoUsuario')?.errors?.['required']">El tiposUsuario es obligatorio</div>
+                <div class="alert alert-danger" role="alert" *ngIf="formRol.get('tipoUsuario')?.touched && formRol.get('tipoUsuario')?.errors?.['minlength']">Minimo 3 caracteres</div>
+                <div class="alert alert-danger" role="alert" *ngIf="formRol.get('tipoUsuario')?.touched && formRol.get('tipoUsuario')?.errors?.['maxlength']">Maximo 20 caracteres</div>
+              </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button [disabled]="(formRol.invalid)" type="submit" class="btn btn-success btn-lg">Guardar</button>
+              </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button (click)="volver()" type="button" class="btn btn-secondary btn-lg">Volver</button>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>    
+</div>    

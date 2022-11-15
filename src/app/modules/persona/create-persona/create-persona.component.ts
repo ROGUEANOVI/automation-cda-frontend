@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Persona } from 'src/app/models/persona';
 import { PersonaService } from 'src/app/services/personas/persona.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-persona',

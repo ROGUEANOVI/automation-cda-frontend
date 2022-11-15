@@ -4,7 +4,6 @@
       <div class="card">
         <div class="card-body text-center">
           <h2><span class="title">LISTADO DE PERSONAS</span></h2>
-          <button class="btn btn-success btn-lg" routerLink="/persona/create-persona">Agregar una persona</button>
           <table *ngIf="listPersonas.length > 0" class="table table-striped mt-4">
             <thead>
               <tr>
@@ -15,12 +14,12 @@
                 <th scope="col">Correo</th>
                 <th scope="col">Direccion</th>
                 <th scope="col">Estudios</th>
-                <th scope="col">Opciones</th>
+                <th scope="col"> <button class="btn btn-success btn-lg" routerLink="/persona/create-persona">Agregar</button></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let persona of listPersonas">
-                <th>{{persona.cedula}}</th>
+                <td>{{persona.cedula}}</td>
                 <td>{{persona.nombre}}</td>
                 <td>{{persona.apellidos}}</td>
                 <td>{{persona.telefono}}</td>
