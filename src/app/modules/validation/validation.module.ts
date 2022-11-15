@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ValidationRoutingModule } from './validation-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 // COMPONENTS
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -21,7 +21,6 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     ValidationRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ]
 })
 export class ValidationModule { }

@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { VehiculoRoutingModule } from './vehiculo-routing.module';
-import { ListVehiculoComponent } from './list-vehiculo/list-vehiculo.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// COMPONENTS
 import { CreateVehiculoComponent } from './create-vehiculo/create-vehiculo.component';
 import { EditVehiculoComponent } from './edit-vehiculo/edit-vehiculo.component';
 import { ListVehiculosComponent } from './list-vehiculos/list-vehiculos.component';
@@ -10,14 +12,14 @@ import { ListVehiculosComponent } from './list-vehiculos/list-vehiculos.componen
 
 @NgModule({
   declarations: [
-    ListVehiculoComponent,
     CreateVehiculoComponent,
     EditVehiculoComponent,
     ListVehiculosComponent
   ],
   imports: [
     CommonModule,
-    VehiculoRoutingModule
+    VehiculoRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class VehiculoModule { }

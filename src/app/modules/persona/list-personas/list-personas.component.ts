@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Persona } from 'src/app/models/persona';
-import { PersonaService } from 'src/app/services/personas/persona.service';
 import Swal from 'sweetalert2';
+import { PersonaService } from 'src/app/services/personas/persona.service';
+import { Persona } from 'src/app/models/persona';
 
 @Component({
   selector: 'app-list-personas',
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class ListPersonasComponent implements OnInit {
 
-  listPersonas: Persona[] = []
+  listPersonas: Persona[] = [];
 
   constructor( private personaService: PersonaService, private router: Router) { }
 
@@ -20,7 +20,7 @@ export class ListPersonasComponent implements OnInit {
   }
 
   getListPersonas(){
-    this.personaService.listPersonas()
+    this.personaService.getListPersonas()
     .subscribe({
       next: res => {
         console.log(res);
