@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 import { Rol } from 'src/app/models/rol';
 import { RolService } from 'src/app/services/roles/rol.service';
-import Swal from 'sweetalert2';
 
 
 @Component({

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Rol } from 'src/app/models/rol';
 import { RolService } from 'src/app/services/roles/rol.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-rol',

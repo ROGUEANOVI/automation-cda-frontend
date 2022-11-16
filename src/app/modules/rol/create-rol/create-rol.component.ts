@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 import { Rol } from 'src/app/models/rol';
 import { RolService } from 'src/app/services/roles/rol.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-rol',
@@ -60,6 +61,8 @@ export class CreateRolComponent implements OnInit {
               icon: 'success',
               showConfirmButton: true,
             });
+
+            this.router.navigate(["/rol/list-roles"]);
             
           }
         },

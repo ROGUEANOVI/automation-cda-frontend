@@ -71,6 +71,7 @@ export class CreateVehiculoComponent implements OnInit {
               showConfirmButton: true,
             });
             
+            this.router.navigate(["/vehiculo/list-vehiculos"]);
           }
         },
         error: err =>{
