@@ -1,1 +1,70 @@
-<p>edit-vehiculo works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-around align-items-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body text-center bg-light bg-gradient text-dark">
+          <h2><span class="title">EDITAR VEHICULO</span></h2>
+          <form class="mt-3" [formGroup]="formVehiculo" (ngSubmit)="editVehiculo()">
+            <div class="mb-3">
+              <input formControlName="placa" type="text" class="form-control form-control-lg" placeholder="Placa">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('placa')?.touched && formVehiculo.get('placa')?.errors?.['required']">La Placa es obligatoria</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('placa')?.touched && formVehiculo.get('placa')?.errors?.['minlength']">Minimo 7 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('placa')?.touched && formVehiculo.get('placa')?.errors?.['maxlength']">Maximo 7 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('placa')?.errors?.['pattern']">La placa no tiene un formato valido</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="marca" type="text" class="form-control form-control-lg" placeholder="marca">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('marca')?.touched && formVehiculo.get('marca')?.errors?.['required']">La marca es obligatoria</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('marca')?.touched && formVehiculo.get('marca')?.errors?.['minlength']">Minimo 3 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('marca')?.touched && formVehiculo.get('marca')?.errors?.['maxlength']">Maximo 20 caracteres</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="modelo" type="text" class="form-control form-control-lg" placeholder="modelo(año entre 1950 - 2022)">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['required']">El modelo es obligatorio</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['minlength']">Modelo minimo 1950</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['maxlength']">Modelo minimo 2023</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="numeroPasajeros" type="number" class="form-control form-control-lg" placeholder="Numero de pasajeros">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('numeroPasajeros')?.touched && formVehiculo.get('numeroPasajeros')?.errors?.['required']">El modelo es obligatorio</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('numeroPasajeros')?.touched && formVehiculo.get('numeroPasajeros')?.errors?.['min']">Pasajeros minimos 2</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('numeroPasajeros')?.touched && formVehiculo.get('numeroPasajeros')?.errors?.['max']">pPasajeros maximos 50</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="cilindrajeMotor" type="text" class="form-control form-control-lg" placeholder="Cilindraje del motor">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('cilindrajeMotor')?.touched && formVehiculo.get('cilindrajeMotor')?.errors?.['required']">El Cilindraje es obligatorio</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('cilindrajeMotor')?.touched && formVehiculo.get('cilindrajeMotor')?.errors?.['minlength']">Minimo 4 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('cilindrajeMotor')?.touched && formVehiculo.get('cilindrajeMotor')?.errors?.['maxlength']">Maximo 10 caracteres</div>
+            </div>
+
+            <div class="mb-3">
+              <input formControlName="estadoSoat" type="text" class="form-control form-control-lg" placeholder="SOAT 'vigente' o 'vencido'">
+
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('estadoSoat')?.touched && formVehiculo.get('estadoSoat')?.errors?.['required']">El estado del SOAT es obligatorio</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('estadoSoat')?.touched && formVehiculo.get('estadoSoat')?.errors?.['minlength']">Minimo 7 caracteres</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('estadoSoat')?.touched && formVehiculo.get('estadoSoat')?.errors?.['maxlength']">Maximo 7 caracteres</div>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button [disabled]="(formVehiculo.invalid)" type="submit" class="btn btn-success btn-lg">Guardar</button>
+            </div>
+
+            <div class="d-grid gap-2 mt-4">
+              <button (click)="volver()" type="button" class="btn btn-secondary btn-lg">Volver</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,39 @@
-<p>list-vehiculos works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+      <div class="card">
+        <div class="card-body text-center">
+          <h2><span class="title">LISTADO DE VEHICULOS</span></h2>
+          <table *ngIf="listVehiculos.length > 0" class="table table-striped mt-4">
+            <thead>
+              <tr>
+                <th scope="col">Placa</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">N° Pasajeros</th>
+                <th scope="col">Cilindraje</th>
+                <th scope="col">Estado SOAT</th>
+                <th scope="col"> <button class="btn btn-success btn-lg" routerLink="/vehiculo/create-vehiculo">Agregar</button></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let vehiculo of listVehiculos">
+                <td>{{vehiculo.placa}}</td>
+                <td>{{vehiculo.marca}}</td>
+                <td>{{vehiculo.modelo}}</td>
+                <td>{{vehiculo.numeroPasajeros}}</td>
+                <td>{{vehiculo.cilindrajeMotor}}</td>
+                <td>{{vehiculo.estadoSoat}}</td>
+                <td>
+                  <i (click)="editVehiculo(vehiculo._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+                  <i (click)="deleteVehiculo(vehiculo._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h5 *ngIf="listVehiculos.length == 0" class="text-center">No hay vehiculos para mostrar</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
