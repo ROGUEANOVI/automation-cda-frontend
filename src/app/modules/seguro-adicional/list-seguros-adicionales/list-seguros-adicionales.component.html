@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1">
+      <div class="card">
+        <div class="card-body text-center">
+          <h2><span class="title">LISTADO DE SEGUROS ADICONALES</span></h2>
+          <table *ngIf="listSegurosAdicionales.length > 0" class="table table-striped mt-4">
+            <thead>
+              <tr>
+                <th scope="col">Tipo de seguro adicional</th>
+                <th scope="col">Fecha de vencimiento</th>
+                
+                <td><button class="btn btn-success btn-lg" routerLink="/seguro-adicional/create-seguro-adicional">Agregar</button></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let seguroAdicional of listSegurosAdicionales">
+                <td>{{seguroAdicional.tipo}}</td>
+                <td>{{seguroAdicional.fechaVencimiento}}</td>
+                <td>
+                  <i (click)="editSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+                  <i (click)="deleteSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h5 *ngIf="listSegurosAdicionales.length == 0" class="text-center">No hay Seguros Adicionales para mostrar</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -71,6 +71,8 @@ export class CreatePersonaComponent implements OnInit {
               icon: 'success',
               showConfirmButton: true,
             });
+
+            this.router.navigate(["/persona/list-personas"]);
             
           }
         },
