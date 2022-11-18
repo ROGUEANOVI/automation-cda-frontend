@@ -1,0 +1,56 @@
+.fa-solid{
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+i{
+  position: relative;
+}
+
+.tooltip-agregar{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: green;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+.tooltip-editar{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: blue;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+.tooltip-eliminar{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: red;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+i:hover .tooltip-agregar{
+  display: block;
+}
+
+i:hover .tooltip-editar{
+  display: block;
+}
+
+i:hover .tooltip-eliminar{
+  display: block;
+}

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { SeguroAdicional } from 'src/app/models/seguroadicional';
 import { SeguroAdicionalService } from 'src/app/services/seguros-adicionales/seguro-adicional.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-seguros-adicionales',
