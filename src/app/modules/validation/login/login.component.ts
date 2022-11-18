@@ -4,6 +4,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 import { Credenciales } from 'src/app/models/credenciales';
 import Swal from 'sweetalert2';
+import { RolService } from 'src/app/services/roles/rol.service';
+import { Menu } from 'src/app/models/menu';
+import { MenuService } from 'src/app/services/menus/menu.service';
+import { Rol } from 'src/app/models/rol';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +17,9 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
 
   formCredenciales: FormGroup;
-
+  rol!: string;
   
-  constructor(private fb: FormBuilder , private validationService: ValidationService, private router: Router) { 
+  constructor(private fb: FormBuilder , private validationService: ValidationService, private rolService: RolService ,private menuService: MenuService, private router: Router) { 
     this.formCredenciales = this.fb.group({
       _nombreUsuario: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
       _clave: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
@@ -34,15 +38,18 @@ export class LoginComponent implements OnInit {
     this.validationService.logIn(credenciales)
       .subscribe({
         next:  res => {
-          console.log(res);
-          localStorage.setItem("token", res.token);
           Swal.fire({
             title: 'Inicio De Sesión',
-            text: 'El Usuario A Iniciado Sesión con Exito',
+            text: 'El Usuario A Iniciado Sesión con ¡Exito!',
             icon: 'success',
             showConfirmButton: true,
           });
-          this.router.navigate(["/vehiculos"]);
+          
+          localStorage.setItem("token", Object.values(res)[3]);
+          const idRol:any = Object.values(Object.values(res)[0])[4];
+          this.getRol(idRol);
+          this.router.navigate(["/vehiculo/list-vehiculos"]);
+          this.generateMenus();
         },
         error: err =>{
           console.error(err);
@@ -54,6 +61,28 @@ export class LoginComponent implements OnInit {
           });
         }
       })
+  }
+
+  getRol(id: string){
+    this.rolService.getRol(id).subscribe({
+      next: (res: Rol) => {
+        console.log("rol:", res.tipoUsuario);
+        localStorage.setItem("rol", res.tipoUsuario)
+      },
+      error: (err) => {
+        console.log(err); 
+      }
+    });
+  }
+
+  generateMenus(){
+    const menus = new Array<Menu>();
+    menus.push({"nombre": "Vehiculos", "patch": "/vehiculo/list-vehiculos"});
+    menus.push({"nombre": "Seguros Adicionales", "patch": "/seguro-adicional/list-seguros-adicionales"});
+    menus.push({"nombre": "Revisiones", "patch": "revision/list-revisiones"});
+    menus.push({"nombre": "Repuestos", "patch": "/repuesto/list-repuestos"});
+    this.menuService.menuEmmiter.emit(menus);
+    return menus;
   }
 
 }
