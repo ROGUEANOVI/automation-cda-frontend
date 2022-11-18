@@ -13,7 +13,9 @@
                 <th scope="col">N° Pasajeros</th>
                 <th scope="col">Cilindraje</th>
                 <th scope="col">Estado SOAT</th>
-                <th scope="col"> <button class="btn btn-success btn-lg" routerLink="/vehiculo/create-vehiculo">Agregar</button></th>
+                <th scope="col">Opciones</th>
+                <th scope="col">Revisiones</th>
+
               </tr>
             </thead>
             <tbody>
@@ -25,13 +27,30 @@
                 <td>{{vehiculo.cilindrajeMotor}}</td>
                 <td>{{vehiculo.estadoSoat}}</td>
                 <td>
+                  <i class="fa-solid fa-plus text-success" routerLink="/vehiculo/create-vehiculo"><span class="tooltip-agregar"> Agregar </span></i>
+
                   <i (click)="editVehiculo(vehiculo._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+
                   <i (click)="deleteVehiculo(vehiculo._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                </td>
+                
+                <td>
+                  <i (click)="getListRevisiones(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench  text-warning"><span class="tooltip-list-revisiones">Lista</span></i>
+
+                  <i (click)="createRevision(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench text-success"><span class="tooltip-create-revision">Agregar</span></i>
                 </td>
               </tr>
             </tbody>
           </table>
+          
           <h5 *ngIf="listVehiculos.length == 0" class="text-center">No hay vehiculos para mostrar</h5>
+
+          <div *ngIf="listVehiculos.length == 0" class="text-center">
+            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

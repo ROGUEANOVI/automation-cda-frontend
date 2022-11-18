@@ -11,7 +11,7 @@
                 <th scope="col">Clave</th>
                 <th scope="col">IdPersona</th>
                 <th scope="col">IdRol</th>
-                <th scope="col"> <button class="btn btn-success btn-lg" routerLink="/usuario/create-usuario">Agregar</button></th>
+                <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -22,13 +22,22 @@
                 <td>{{usuario.idRol}}</td>
                
                 <td>
+                  <i class="fa-solid fa-plus text-success" routerLink="/usuario/create-usuario"><span class="tooltip-agregar"> Agregar </span></i>
                   <i (click)="editUsuario(usuario._id!, usuario.clave!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
                   <i (click)="deleteUsuario(usuario._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
                 </td>
               </tr>
             </tbody>
           </table>
+          
           <h5 *ngIf="listUsuarios.length == 0" class="text-center">No hay usuarios para mostrar</h5>
+          
+          <div *ngIf="listUsuarios.length == 0" class="text-center">
+            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

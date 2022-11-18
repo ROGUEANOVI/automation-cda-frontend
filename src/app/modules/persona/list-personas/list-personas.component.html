@@ -1,6 +1,6 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-lg-10 offset-lg-1">
+    <div class="col-lg-12">
       <div class="card">
         <div class="card-body text-center">
           <h2><span class="title">LISTADO DE PERSONAS</span></h2>
@@ -14,7 +14,7 @@
                 <th scope="col">Correo</th>
                 <th scope="col">Direccion</th>
                 <th scope="col">Estudios</th>
-                <th scope="col"> <button class="btn btn-success btn-lg" routerLink="/persona/create-persona">Agregar</button></th>
+                <th scope="col">Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -27,13 +27,22 @@
                 <td>{{persona.direccion}}</td>
                 <td>{{persona.nivelEstudios}}</td>
                 <td>
+                  <i class="fa-solid fa-plus text-success" routerLink="/persona/create-persona"><span class="tooltip-agregar"> Agregar </span></i>
                   <i (click)="editPersona(persona._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
                   <i (click)="deletePersona(persona._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
                 </td>
               </tr>
             </tbody>
           </table>
+
           <h5 *ngIf="listPersonas.length == 0" class="text-center">No hay personas para mostrar</h5>
+        
+          <div *ngIf="listPersonas.length == 0" class="text-center">
+            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
