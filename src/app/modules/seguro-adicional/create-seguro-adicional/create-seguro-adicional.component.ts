@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { SeguroAdicional } from 'src/app/models/seguroadicional';
 import { SeguroAdicionalService } from 'src/app/services/seguros-adicionales/seguro-adicional.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-seguro-adicional',
