@@ -7,6 +7,22 @@ i{
   position: relative;
 }
 
+.tooltip-agregar{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: green;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+i:hover .tooltip-agregar{
+  display: block;
+}
+
 .tooltip-editar{
   position: absolute;
   display: none;

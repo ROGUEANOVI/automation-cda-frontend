@@ -1,1 +1,102 @@
-<p>list-revisiones works!</p>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body text-center">
+          <h2><span class="title">LISTADO DE REVISIONES</span></h2>
+          <ng-container *ngIf="_idVehiculo === null; else VehiculoRevision">
+            <table *ngIf="listRevisiones.length > 0" class="table table-striped mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Fecha Revision</th>
+                  <th scope="col">Nivel Aceite</th>
+                  <th scope="col">Nivel Frenos</th>
+                  <th scope="col">Nivel Refrigerante</th>
+                  <th scope="col">Nivel direccion</th>
+                  <th scope="col">idVehiculo</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let revision of listRevisiones">
+                  <td>{{revision.fechaRevision.toLocaleString().split("T")[0]}}</td>
+                  <td>{{revision.nivelAceite}}</td>
+                  <td>{{revision.nivelFrenos}}</td>
+                  <td>{{revision.nivelRefrigerante}}</td>
+                  <td>{{revision.nivelDireccion}}</td>
+                  <td>{{revision.idVehiculo}}</td>
+                  <td>
+                    <i class="fa-solid fa-plus text-success" routerLink="/revision/create-revision"><span class="tooltip-agregar"> Agregar </span></i>
+  
+                    <i (click)="editRevision(revision._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+  
+                    <i (click)="deleteRevision(revision._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                  
+                </tr>
+              </tbody>
+          </table>
+
+          <h5 *ngIf="listRevisiones.length == 0" class="text-center">No hay revisiones para mostrar</h5>
+
+          <div *ngIf="listRevisiones.length == 0" class="text-center">
+            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+
+        </ng-container>
+
+        <ng-template #VehiculoRevision>
+
+          <table *ngIf="listRevisionesVehiculo.length > 0" class="table table-striped mt-4">
+            <thead>
+              <tr>
+                <th scope="col">Fecha Revision</th>
+                  <th scope="col">Nivel Aceite</th>
+                  <th scope="col">Nivel Frenos</th>
+                  <th scope="col">Nivel Refrigerante</th>
+                  <th scope="col">Nivel direccion</th>
+                  <th scope="col">idVehiculo</th>
+                  <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let revision of listRevisionesVehiculo">
+                <td>{{revision.fechaRevision.toLocaleString().split("T")[0]}}</td>
+                <td>{{revision.nivelAceite}}</td>
+                <td>{{revision.nivelFrenos}}</td>
+                <td>{{revision.nivelRefrigerante}}</td>
+                <td>{{revision.nivelDireccion}}</td>
+                <td>{{revision.idVehiculo}}</td>
+                <td>
+                  <i [routerLink]="['/vehiculo/list-vehiculos']" class="fa-solid fa-rotate-left text-warning"><span class="tooltip-regresar"> Regresar </span></i>
+
+                  <i [routerLink]="['/revision/create-revision', _idVehiculo]" class="fa-solid fa-plus text-success" ><span class="tooltip-agregar"> Agregar </span></i>
+
+                  <i (click)="editRevisionVehiculo(_idVehiculo! ,revision._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+
+                  <i (click)="deleteRevision(revision._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                </td>
+                
+              </tr>
+            </tbody>
+
+        </table>
+        <h5 *ngIf="listRevisionesVehiculo.length == 0" class="text-center">No hay Revisiones de este vehiculo para mostrar</h5>
+
+        <div *ngIf="listRevisionesVehiculo.length == 0" class="text-center">
+          <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

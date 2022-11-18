@@ -8,6 +8,9 @@ const routes: Routes = [
   {path: "create-revision", component: CreateRevisionComponent},
   {path: "list-revisiones", component: ListRevisionesComponent},
   {path: "edit-revision/:id", component: EditRevisionComponent},
+  {path: "create-revision/:idVehiculo", component: CreateRevisionComponent},
+  {path: "list-revisiones/:idVehiculo",  component: ListRevisionesComponent},
+  {path: "edit-revision/:idVehiculo/:id", component: EditRevisionComponent}
 ];
 
 @NgModule({

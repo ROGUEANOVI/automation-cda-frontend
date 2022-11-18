@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-vehiculo',
@@ -16,7 +16,7 @@ export class CreateVehiculoComponent implements OnInit {
   vehiculoCreated = new Array<string>();
   formVehiculoDisabled: boolean;
 
-  constructor(private fb: FormBuilder , private personaService: VehiculoService, private router: Router) {
+  constructor(private fb: FormBuilder , private vehiculoService: VehiculoService, private router: Router) {
 
     this.formVehiculo = this.fb.group({
       placa: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7), Validators.pattern('^([A-Z]{3}-[0-9]{3})|([A-Z]{3}-[0-9]{2}[A-Z]{1})+$')]],
@@ -42,7 +42,7 @@ export class CreateVehiculoComponent implements OnInit {
       estadoSoat: this.formVehiculo.get("direccion")?.value,
     }
 
-    this.personaService.createVehiculo(vehiculo)
+    this.vehiculoService.createVehiculo(vehiculo)
       .subscribe({
         next:  res => {
           console.log(res);

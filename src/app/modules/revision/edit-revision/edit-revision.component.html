@@ -1,1 +1,90 @@
-<p>edit-revision works!</p>
+<div class="container mt-5">
+  <div class="row justify-content-around align-items-center">
+
+    <ng-container>
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body text-center bg-light bg-gradient text-dark">
+            <h2><span class="title">EDITAR REVISION</span></h2>
+            <form class="mt-3" [formGroup]="formRevision" (ngSubmit)="editRevision()">
+
+              <div class="mb-3">
+                <select formControlName="nivelAceite" class="form-select" aria-label="Default select example">
+                  <option selected>Seleccione el nivel de aceite del motor</option>
+                  <option value="alto">Nivel Alto</option>
+                  <option value="medio">Nivel Medio</option>
+                  <option value="bajo">Nivel Bajo</option>
+                </select>
+                
+                <div class="alert alert-danger" role="alert" *ngIf="(formRevision.get('nivelAceite')?.value === 'Seleccione el nivel de aceite del motor') && formRevision.get('nivelAceite')?.touched " >Seleccione un nivel de aceite valido</div>
+              </div>
+
+              <div class="mb-3">
+                <select formControlName="nivelFrenos" class="form-select" aria-label="Default select example">
+                  <option selected>Seleccione el nivel de liquido de frenos</option>
+                  <option value="alto">Nivel Alto</option>
+                  <option value="medio">Nivel Medio</option>
+                  <option value="bajo">Nivel Bajo</option>
+                </select>
+                
+                <div class="alert alert-danger" role="alert" *ngIf="(formRevision.get('nivelFrenos')?.value === 'Seleccione el nivel de liquido de frenos') && formRevision.get('nivelFrenos')?.touched " >Seleccione un nivel de liquido de frenos valido</div>
+              </div>
+
+              <div class="mb-3">
+                <select formControlName="nivelRefrigerante" class="form-select" aria-label="Default select example">
+                  <option selected>Seleccione el nivel de refrigerante</option>
+                  <option value="alto">Nivel Alto</option>
+                  <option value="medio">Nivel Medio</option>
+                  <option value="bajo">Nivel Bajo</option>
+                </select>
+                
+                <div class="alert alert-danger" role="alert" *ngIf="(formRevision.get('nivelRefrigerante')?.value === 'Seleccione el nivel de refrigerante') && formRevision.get('nivelRefrigerante')?.touched " >Seleccione un nivel de refrigerante valido</div>
+              </div>
+
+              <div class="mb-3">
+                <select formControlName="nivelDireccion" class="form-select" aria-label="Default select example">
+                  <option selected>Seleccione el nivel de aceite de la dirreccion</option>
+                  <option value="alto">Nivel Alto</option>
+                  <option value="medio">Nivel Medio</option>
+                  <option value="bajo">Nivel Bajo</option>
+                </select>
+                
+                <div class="alert alert-danger" role="alert" *ngIf="(formRevision.get('nivelDireccion')?.value === 'Seleccione el nivel de aceite de la dirreccion') && formRevision.get('nivelDireccion')?.touched " >Seleccione un nivel de aceite de la dirreccion valido</div>
+              </div>
+
+              <div class="mb-3">
+                <label for="fechaRevision"> Fecha de revision </label>
+                <input formControlName="fechaRevision" type="date" name="fechaRevision" class="form-control form-control-lg" placeholder="Fecha de revision AAAA-MM-DD">
+  
+                <div class="alert alert-danger" role="alert" *ngIf="formRevision.get('fechaRevision')?.touched && formRevision.get('fechaRevision')?.errors?.['required']">La fecha de revision es obligatoria</div>
+              </div>
+
+
+              <div class="mb-3">
+                <input formControlName="idVehiculo" type="text" class="form-control form-control-lg" placeholder="idVehiculo" [readonly]="[_idVehiculo !== null]">
+  
+                <div class="alert alert-danger" role="alert" *ngIf="formRevision.get('idVehiculo')?.touched && formRevision.get('idVehiculo')?.errors?.['required']">El idVehiculo es obligatorio</div>
+                <div class="alert alert-danger" role="alert" *ngIf="formRevision.get('idVehiculo')?.touched && formRevision.get('idVehiculo')?.errors?.['minlength']">Minimo 24 caracteres</div>
+                <div class="alert alert-danger" role="alert" *ngIf="formRevision.get('idVehiculo')?.touched && formRevision.get('idVehiculo')?.errors?.['maxlength']">Maximo 24 caracteres</div>
+              </div>
+
+
+              <div class="d-grid gap-2 mt-4">
+                <button [disabled]="formRevision.get('nivelAceite')?.value === 'Seleccione el nivel de aceite del motor' || formRevision.get('nivelFrenos')?.value === 'Seleccione el nivel de liquido de frenos' || formRevision.get('nivelRefrigerante')?.value === 'Seleccione el nivel de refrigerante' || formRevision.get('nivelDireccion')?.value === 'Seleccione el nivel de aceite de la dirreccion' || formRevision.invalid" type="submit" class="btn btn-success btn-lg">Guardar</button>
+              </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button (click)="volver()" type="button" class="btn btn-secondary btn-lg">Volver</button>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+  </div>    
+</div>    
+
+
+

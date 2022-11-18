@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
-import Swal from 'sweetalert2';
 
 
 @Component({
@@ -77,6 +77,36 @@ export class ListVehiculosComponent implements OnInit {
         console.log("No se elimino el vehiculo");
       }
     })
+  }
+
+  getListRevisiones(_id: string){
+    Swal.fire({
+      title: 'Listado De Revisiones',
+      text: '¿Quiere acceder al listado de revisiones de este vehiculo?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/revision/list-revisiones",_id]);
+      }
+    }); 
+  }
+
+  createRevision(_id: string){
+    Swal.fire({
+      title: 'Registro De Revision',
+      text: '¿Quiere registrar una revision de este vehiculo?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/revision/create-revision",_id]);
+      }
+    }); 
   }
 
 }
