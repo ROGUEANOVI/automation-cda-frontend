@@ -15,12 +15,13 @@ export class ValidationService {
 
   constructor( private http: HttpClient, private router: Router) { }
 
-  signUp(usuario: Usuario): Observable<any>{
-    return this.http.post(this.URL + "/usuarios-registro", usuario);
+  signUp(usuario: Usuario): Observable<Object>{
+    return this.http.post<Object>(this.URL + "/usuarios-registro", usuario);
   }
 
-  logIn(credenciales: Credenciales): Observable<any>{
-    return this.http.post(this.URL + "/usuarios-validacion", credenciales);
+
+  logIn(credenciales: Credenciales): Observable<object>{
+    return this.http.post<object>(this.URL + "/usuarios-validacion", credenciales);
   }
 
   loggedIn(){

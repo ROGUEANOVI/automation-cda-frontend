@@ -15,6 +15,7 @@ import { NavBarComponent } from './components/template/nav-bar/nav-bar.component
 import { FooterComponent } from './components/template/footer/footer.component';
 import { VehiculosComponent } from './components/vehiculos/vehiculos.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LogoComponent } from './components/template/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FooterComponent,
     VehiculosComponent,
     NotFoundComponent,
+    LogoComponent,
   ],
   imports: [
     BrowserModule,

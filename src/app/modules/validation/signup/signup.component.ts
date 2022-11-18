@@ -8,6 +8,8 @@ import { PersonaService } from 'src/app/services/personas/persona.service';
 import { RolService } from 'src/app/services/roles/rol.service';
 import { Usuario } from 'src/app/models/usuario';
 import Swal from 'sweetalert2';
+import { Menu } from 'src/app/models/menu';
+import { MenuService } from 'src/app/services/menus/menu.service';
 
 @Component({
   selector: 'app-signup',
@@ -24,7 +26,7 @@ export class SignupComponent implements OnInit {
   usuarioExists = new Array<string>();
   formPersonaDisabled: boolean;
 
-  constructor(private fb: FormBuilder , private personaService: PersonaService, private rolService: RolService, public validateService: ValidationService, private router: Router) {
+  constructor(private fb: FormBuilder , private personaService: PersonaService, private rolService: RolService, public validateService: ValidationService , private menuService: MenuService, private router: Router) {
 
     this.formPersona = this.fb.group({
       cedula: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern("^[0-9]+$")]],
@@ -139,21 +141,47 @@ export class SignupComponent implements OnInit {
             });
           }
           else {
-            localStorage.setItem("token", res.token);
             Swal.fire({
               title: 'Usuario Registrado',
               text: 'Usuario Registrado ¡Exitosamente!',
               icon: 'success',
               showConfirmButton: true,
             });
-            this.router.navigate(["/vehiculos"]);
-            }
+            
+            localStorage.setItem("token", Object.values(res)[3]);
+            const idRol:any = Object.values(Object.values(res)[0])[4];
+            this.getRol(idRol);
+            this.router.navigate(["/vehiculo/list-vehiculos"]);
+            this.generateMenus();
+          }
           
         },
         error: err =>{
           console.error(err);
         }
       })
+  }
+
+  getRol(id: string){
+    this.rolService.getRol(id).subscribe({
+      next: (res: Rol) => {
+        console.log("rol:", res.tipoUsuario);
+        localStorage.setItem("rol", res.tipoUsuario)
+      },
+      error: (err) => {
+        console.log(err); 
+      }
+    });
+  }
+
+  generateMenus(){
+    const menus = new Array<Menu>();
+    menus.push({"nombre": "Vehiculos", "patch": "/vehiculo/list-vehiculos"});
+    menus.push({"nombre": "Seguros Adicionales", "patch": "/seguro-adicional/list-seguros-adicionales"});
+    menus.push({"nombre": "Revisiones", "patch": "revision/list-revisiones"});
+    menus.push({"nombre": "Repuestos", "patch": "/repuesto/list-repuestos"});
+    this.menuService.menuEmmiter.emit(menus);
+    return menus;
   }
 
 }
