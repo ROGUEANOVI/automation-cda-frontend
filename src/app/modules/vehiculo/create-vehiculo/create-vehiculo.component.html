@@ -23,11 +23,11 @@
             </div>
 
             <div class="mb-3">
-              <input formControlName="modelo" type="number" class="form-control form-control-lg" placeholder="modelo(año)">
+              <input formControlName="modelo" type="text" class="form-control form-control-lg" placeholder="modelo - año(1950-2023)">
 
               <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['required']">El modelo es obligatorio</div>
-              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['min']">Modelo minimo 1950</div>
-              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['max']">Modelo minimo 2023</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['minlength']">Modelo minimo 1950</div>
+              <div class="alert alert-danger" role="alert" *ngIf="formVehiculo.get('modelo')?.touched && formVehiculo.get('modelo')?.errors?.['maxlength']">Modelo minimo 2023</div>
             </div>
 
             <div class="mb-3">

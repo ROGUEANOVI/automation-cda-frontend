@@ -21,7 +21,7 @@ export class CreateVehiculoComponent implements OnInit {
     this.formVehiculo = this.fb.group({
       placa: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7), Validators.pattern('^([A-Z]{3}-[0-9]{3})|([A-Z]{3}-[0-9]{2}[A-Z]{1})+$')]],
       marca: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
-      modelo: ["", [Validators.required, Validators.min(1950), Validators.max(2023)]],
+      modelo: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       numeroPasajeros: ["", [Validators.required, Validators.min(2), Validators.max(50)]],
       cilindrajeMotor: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       estadoSoat: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
@@ -34,12 +34,12 @@ export class CreateVehiculoComponent implements OnInit {
 
   createVehiculo(){
     const vehiculo: Vehiculo = {
-      placa: this.formVehiculo.get("cedula")?.value,
-      marca: this.formVehiculo.get("nombre")?.value,
-      modelo: this.formVehiculo.get("apellidos")?.value,
-      numeroPasajeros: this.formVehiculo.get("telefono")?.value,
-      cilindrajeMotor: this.formVehiculo.get("correo")?.value,
-      estadoSoat: this.formVehiculo.get("direccion")?.value,
+      placa: this.formVehiculo.get("placa")?.value,
+      marca: this.formVehiculo.get("marca")?.value,
+      modelo: this.formVehiculo.get("modelo")?.value,
+      numeroPasajeros: this.formVehiculo.get("numeroPasajeros")?.value,
+      cilindrajeMotor: this.formVehiculo.get("cilindrajeMotor")?.value,
+      estadoSoat: this.formVehiculo.get("estadoSoat")?.value,
     }
 
     this.vehiculoService.createVehiculo(vehiculo)
