@@ -39,7 +39,7 @@ export class EditRevisionComponent implements OnInit {
       nivelAceite: this.formRevision.get("nivelAceite")?.value,
       nivelFrenos: this.formRevision.get("nivelFrenos")?.value,
       nivelRefrigerante: this.formRevision.get("nivelRefrigerante")?.value,
-      nivelDireccion: this.formRevision.get("nivelRefrigerante")?.value,
+      nivelDireccion: this.formRevision.get("nivelDireccion")?.value,
       idVehiculo: this._idVehiculo === null ? this.formRevision.get("idVehiculo")?.value : this._idVehiculo  
     }
     this.revisionService.editRevision(this.id, revision)

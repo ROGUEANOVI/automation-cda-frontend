@@ -178,7 +178,7 @@ export class SignupComponent implements OnInit {
     const menus = new Array<Menu>();
     menus.push({"nombre": "Vehiculos", "patch": "/vehiculo/list-vehiculos"});
     menus.push({"nombre": "Seguros Adicionales", "patch": "/seguro-adicional/list-seguros-adicionales"});
-    menus.push({"nombre": "Revisiones", "patch": "revision/list-revisiones"});
+    menus.push({"nombre": "Revisiones", "patch": "/revision/list-revisiones"});
     menus.push({"nombre": "Repuestos", "patch": "/repuesto/list-repuestos"});
     this.menuService.menuEmmiter.emit(menus);
     return menus;
