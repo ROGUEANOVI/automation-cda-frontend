@@ -56,6 +56,30 @@ i{
   top: 100%;
 }
 
+.tooltip-create-repuesto{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: green;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+
+.tooltip-list-repuestos{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: rgb(4, 216, 253);
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
 i:hover .tooltip-regresar{
   display: block;
 }
@@ -71,3 +95,12 @@ i:hover .tooltip-editar{
 i:hover .tooltip-eliminar{
   display: block;
 }
+
+i:hover .tooltip-create-repuesto{
+  display: block;
+}
+
+i:hover .tooltip-list-repuestos{
+  display: block;
+}
+

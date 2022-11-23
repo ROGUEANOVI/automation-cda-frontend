@@ -6,7 +6,7 @@
         <div class="card">
           <div class="card-body text-center bg-light bg-gradient text-dark">
             <h2><span class="title">AGREGAR REPUESTO</span></h2>
-            <form class="mt-3" [formGroup]="formRepuesto" (ngSubmit)="createRepuesto()">
+            <form class="mt-3" [formGroup]="formRepuesto" (ngSubmit)="handleCreateRepuesto()">
               
               <div class="mb-3">
                 <input formControlName="descripcion" type="text" class="form-control form-control-lg" placeholder="Descripcion">

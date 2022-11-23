@@ -1,51 +1,114 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-lg-10 offset-lg-1">
+    <div class="col-lg-12">
       <div class="card">
         <div class="card-body text-center">
           <h2><span class="title">LISTADO DE VEHICULOS</span></h2>
-          <table *ngIf="listVehiculos.length > 0" class="table table-striped mt-4">
-            <thead>
-              <tr>
-                <th scope="col">Placa</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">N° Pasajeros</th>
-                <th scope="col">Cilindraje</th>
-                <th scope="col">Estado SOAT</th>
-                <th scope="col">Opciones</th>
-                <th scope="col">Revisiones</th>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let vehiculo of listVehiculos">
-                <td>{{vehiculo.placa}}</td>
-                <td>{{vehiculo.marca}}</td>
-                <td>{{vehiculo.modelo}}</td>
-                <td>{{vehiculo.numeroPasajeros}}</td>
-                <td>{{vehiculo.cilindrajeMotor}}</td>
-                <td>{{vehiculo.estadoSoat}}</td>
-                <td>
-                  <i class="fa-solid fa-plus text-success" routerLink="/vehiculo/create-vehiculo"><span class="tooltip-agregar"> Agregar </span></i>
+          <table *ngIf="(listVehiculos.length > 0) || (listVehiculosUsuario.length > 0)" class="table table-striped mt-4">
 
-                  <i (click)="editVehiculo(vehiculo._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+            <ng-container *ngIf="listVehiculos.length > 0; else VehiculosUsuario">
+              <thead>
+                <tr>
+                  <th scope="col">Placa</th>
+                  <th scope="col">Marca</th>
+                  <th scope="col">Modelo</th>
+                  <th scope="col">N° Pasajeros</th>
+                  <th scope="col">Cilindraje</th>
+                  <th scope="col">Estado SOAT</th>
+                  <th scope="col">Opciones</th>
+                  <!-- <th scope="col">Revisiones</th>
+                  <th scope="col">Seguros</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vehiculo of listVehiculos">
+                  <td>{{vehiculo.placa}}</td>
+                  <td>{{vehiculo.marca}}</td>
+                  <td>{{vehiculo.modelo}}</td>
+                  <td>{{vehiculo.numeroPasajeros}}</td>
+                  <td>{{vehiculo.cilindrajeMotor}}</td>
+                  <td>{{vehiculo.estadoSoat}}</td>
+                  <td>
+                    <i class="fa-solid fa-plus text-success" routerLink="/vehiculo/create-vehiculo"><span class="tooltip-agregar"> Agregar </span></i>
+  
+                    <i (click)="editVehiculo(vehiculo._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+  
+                    <i (click)="deleteVehiculo(vehiculo._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                  
+                  <!-- <td>
+                    <i (click)="createRevision(vehiculo._id!)" class="fa-solid fa-plus text-success"><span class="tooltip-create-revision">Agregar</span></i>
 
-                  <i (click)="deleteVehiculo(vehiculo._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
-                </td>
-                
-                <td>
-                  <i (click)="getListRevisiones(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench  text-warning"><span class="tooltip-list-revisiones">Lista</span></i>
+                    <i (click)="getListRevisiones(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench  text-warning"><span class="tooltip-list-revisiones">Lista</span></i>
+                  </td>
 
-                  <i (click)="createRevision(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench text-success"><span class="tooltip-create-revision">Agregar</span></i>
-                </td>
-              </tr>
-            </tbody>
+                  <td>
+                    <i *ngIf="_rol !== 'PROPIETARIO'" (click)="createRevision(vehiculo._id!)" class="fa-solid fa-plus text-success"><span class="tooltip-create-seguro">Agregar</span></i>
+
+                    <i (click)="getListRevisiones(vehiculo._id!)" class="fa-solid fa-id-card text-info"><span class="tooltip-list-seguros">Lista</span></i>
+                  </td> -->
+                </tr>
+              </tbody>
+              
+            </ng-container>
+
+            <ng-template #VehiculosUsuario>
+
+              <thead>
+                <tr>
+                  <th scope="col">Placa</th>
+                  <th scope="col">Marca</th>
+                  <th scope="col">Modelo</th>
+                  <th scope="col">N° Pasajeros</th>
+                  <th scope="col">Cilindraje</th>
+                  <th scope="col">Estado SOAT</th>
+                  <th scope="col">Opciones</th>
+                  <th scope="col">Revisiones</th>
+                  <th scope="col" *ngIf="_rol !== 'MECANICO'">Seguros</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vehiculo of listVehiculosUsuario">
+                  <td>{{vehiculo.placa}}</td>
+                  <td>{{vehiculo.marca}}</td>
+                  <td>{{vehiculo.modelo}}</td>
+                  <td>{{vehiculo.numeroPasajeros}}</td>
+                  <td>{{vehiculo.cilindrajeMotor}}</td>
+                  <td>{{vehiculo.estadoSoat}}</td>
+                  <td>
+                    <i class="fa-solid fa-plus text-success" (click)="createVehiculoUsuario()"><span class="tooltip-agregar"> Agregar </span></i>
+  
+                    <i (click)="editVehiculoUsuario( _idUsuario!,vehiculo._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+  
+                    <i (click)="deleteVehiculo(vehiculo._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                  
+                  <td>
+                    <!-- <i  *ngIf="_rol !== 'PROPIETARIO'" (click)="createRevision(vehiculo._id!)" class="fa-solid fa-plus text-success"><span class="tooltip-create-revision">Agregar</span></i> -->
+
+                    <i (click)="getListRevisiones(vehiculo._id!)" class="fa-solid fa-screwdriver-wrench  text-warning"><span class="tooltip-list-revisiones">Lista</span></i>
+                  </td>
+
+                  <td *ngIf="_rol !== 'MECANICO'">
+                    <!-- <i *ngIf="_rol !== 'PROPIETARIO'" (click)="createSeguro(vehiculo._id!)" class="fa-solid fa-plus text-success"><span class="tooltip-create-seguro">Agregar</span></i> -->
+
+                    <i (click)="getListSeguros(vehiculo._id!)" class="fa-solid fa-id-card text-info"><span class="tooltip-list-seguros">Lista</span></i>
+                  </td>
+                </tr>
+              </tbody>
+              
+            </ng-template>
+            
           </table>
           
-          <h5 *ngIf="listVehiculos.length == 0" class="text-center">No hay vehiculos para mostrar</h5>
+          <h5 *ngIf="(listVehiculos.length == 0) && (listVehiculosUsuario.length == 0)" class="text-center">No hay vehiculos para mostrar</h5>
 
-          <div *ngIf="listVehiculos.length == 0" class="text-center">
+          <div *ngIf="(listVehiculos.length == 0) && (listVehiculosUsuario.length == 0)"  class="d-grid gap-2 mt-4">
+            <button type="button" class="btn btn-success btn-lg" (click)="createVehiculoUsuario()">Registrar Vehiculo</button>
+          </div>
+
+          <div *ngIf="(listVehiculos.length !== 0) && (listVehiculosUsuario.length !== 0)" class="text-center">
             <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
               <span class="visually-hidden">Loading...</span>
             </div>

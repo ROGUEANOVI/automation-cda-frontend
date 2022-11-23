@@ -102,6 +102,10 @@
               <div class="d-grid gap-2 mt-4">
                 <button [disabled]="(formPersona.get('nivelEstudios')?.value === 'Seleccione su nivel de estudios') || (formPersona.invalid)" type="submit" class="btn btn-success btn-lg">Guardar</button>
               </div>
+
+              <div class="d-grid gap-2 mt-4">
+                <button [routerLink]="['/validation/login']" type="button" class="btn btn-secondary btn-lg">Volver</button>
+              </div>
               
             </form>
           </div>

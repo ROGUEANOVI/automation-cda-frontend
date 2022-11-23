@@ -4,30 +4,66 @@
       <div class="card">
         <div class="card-body text-center">
           <h2><span class="title">LISTADO DE SEGUROS ADICONALES</span></h2>
-          <table *ngIf="listSegurosAdicionales.length > 0" class="table table-striped mt-4">
-            <thead>
-              <tr>
-                <th scope="col">Tipo de seguro adicional</th>
-                <th scope="col">Fecha de vencimiento</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let seguroAdicional of listSegurosAdicionales">
-                <td>{{seguroAdicional.tipo}}</td>
-                <td>{{seguroAdicional.fechaVencimiento.toLocaleString().split("T")[0]}}</td>
-                <td>
-                  <i class="fa-solid fa-plus text-success" routerLink="/seguro-adicional/create-seguro-adicional"><span class="tooltip-agregar"> Agregar </span></i>
-                  <i (click)="editSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
-                  <i (click)="deleteSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ng-container *ngIf="_idVehiculo === null; else VehiculoSeguro">
+            <table *ngIf="listSegurosAdicionales.length > 0" class="table table-striped mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Tipo de seguro adicional</th>
+                  <th scope="col">Fecha de vencimiento</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let seguroAdicional of listSegurosAdicionales">
+                  <td>{{seguroAdicional.tipo}}</td>
+                  <td>{{seguroAdicional.fechaVencimiento.toLocaleString().split("T")[0]}}</td>
+                  <td>
+                    <i class="fa-solid fa-plus text-success" routerLink="/seguro-adicional/create-seguro-adicional"><span class="tooltip-agregar"> Agregar </span></i>
+                    <i (click)="editSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+                    <i (click)="deleteSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
 
-          <h5 *ngIf="listSegurosAdicionales.length == 0" class="text-center">No hay Seguros Adicionales para mostrar</h5>
+          <ng-template #VehiculoSeguro>
+            <table *ngIf="listSegurosAdicionalesVehiculo.length > 0" class="table table-striped mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Tipo de seguro adicional</th>
+                  <th scope="col">Fecha de vencimiento</th>
+                  <th scope="col">IdVehiculo</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let seguroAdicional of listSegurosAdicionalesVehiculo">
+                  <td>{{seguroAdicional.tipo}}</td>
+                  <td>{{seguroAdicional.fechaVencimiento.toLocaleString().split("T")[0]}}</td>
+                  <td>{{_idVehiculo}}</td>
+                  <td>
+                    <i [routerLink]="['/vehiculo/list-vehiculos', _idVehiculo]" class="fa-solid fa-rotate-left text-warning"><span class="tooltip-regresar"> Regresar </span></i>
+
+                    <i class="fa-solid fa-plus text-success" [routerLink]="['/seguro-adicional/create-seguro-adicional', _idVehiculo]"><span class="tooltip-agregar"> Agregar </span></i>
+
+                    <i (click)="editSeguroAdicionalVehiculo(_idVehiculo! ,seguroAdicional._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+
+                    <i (click)="deleteSeguroAdicional(seguroAdicional._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-template>
           
-          <div *ngIf="listSegurosAdicionales.length == 0" class="text-center">
+
+          <h5 *ngIf="(listSegurosAdicionales.length == 0) && (listSegurosAdicionalesVehiculo.length == 0)" class="text-center">No hay vehiculos para mostrar</h5>
+
+          <div *ngIf="(listSegurosAdicionales.length == 0) && (listSegurosAdicionalesVehiculo.length == 0)"  class="d-grid gap-2 mt-4">
+            <button type="button" class="btn btn-success btn-lg" (click)="createSeguroAdicionalVehiculo()">Registrar Seguro</button>
+          </div>
+
+          <div *ngIf="(listSegurosAdicionales.length !== 0) && (listSegurosAdicionalesVehiculo.length !== 0)" class="text-center">
             <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
               <span class="visually-hidden">Loading...</span>
             </div>

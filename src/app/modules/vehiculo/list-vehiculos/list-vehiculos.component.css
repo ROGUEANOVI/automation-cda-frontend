@@ -43,6 +43,19 @@ i{
   top: 100%;
 }
 
+.tooltip-create-revision{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: green;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
+
 .tooltip-list-revisiones{
   position: absolute;
   display: none;
@@ -55,7 +68,8 @@ i{
   top: 100%;
 }
 
-.tooltip-create-revision{
+
+.tooltip-create-seguro{
   position: absolute;
   display: none;
   border: 1px solid gray;
@@ -66,6 +80,20 @@ i{
   left: 100%;
   top: 100%;
 }
+
+
+.tooltip-list-seguros{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: rgb(4, 216, 253);
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
 
 i:hover .tooltip-agregar{
   display: block;
@@ -79,11 +107,21 @@ i:hover .tooltip-eliminar{
   display: block;
 }
 
+i:hover .tooltip-create-revision{
+  display: block;
+}
+
 i:hover .tooltip-list-revisiones{
   display: block;
 }
 
-i:hover .tooltip-create-revision{
+i:hover .tooltip-create-seguro{
   display: block;
 }
+
+i:hover .tooltip-list-seguros{
+  display: block;
+}
+
+
 

@@ -31,6 +31,10 @@ export class ValidationService {
   logOut(){
     localStorage.removeItem("token");
     localStorage.removeItem("rol");
+    localStorage.removeItem("idRol");
+    localStorage.removeItem("idUsuario");
+    localStorage.removeItem("nombreUsuario");
+    localStorage.removeItem("menus");
     this.router.navigate(["/validation/login"]);
   }
 

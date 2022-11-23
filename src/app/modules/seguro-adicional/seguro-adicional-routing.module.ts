@@ -10,6 +10,9 @@ const routes: Routes = [
   {path: "create-seguro-adicional", component: CreateSeguroAdicionalComponent},
   {path: "list-seguros-adicionales", component: ListSegurosAdicionalesComponent},
   {path: "edit-seguro-adicional/:id", component: EditSeguroAdicionalComponent},
+  {path: "create-seguro-adicional/:idVehiculo", component: CreateSeguroAdicionalComponent},
+  {path: "list-seguros-adicionales/:idVehiculo", component: ListSegurosAdicionalesComponent},
+  {path: "edit-seguro-adicional/:idVehiculo/:id", component: EditSeguroAdicionalComponent},
 ];
 
 @NgModule({

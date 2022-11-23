@@ -13,7 +13,8 @@ import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
 export class EditVehiculoComponent implements OnInit {
 
   formVehiculo: FormGroup;
-  id: string;
+  _idUsuario: string;
+  _id: string;
 
   constructor(private fb: FormBuilder , private vehiculoService: VehiculoService, private router: Router, private aRouter: ActivatedRoute) {
 
@@ -25,7 +26,8 @@ export class EditVehiculoComponent implements OnInit {
       cilindrajeMotor: ["", [Validators.required, Validators.minLength(4), Validators.maxLength(10)]],
       estadoSoat: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
     });
-    this.id = this.aRouter.snapshot.paramMap.get("id")!;
+    this._idUsuario = this.aRouter.snapshot.paramMap.get("idUsuario")!;
+    this._id = this.aRouter.snapshot.paramMap.get("id")!;
   }
   
   ngOnInit(): void {
@@ -42,12 +44,18 @@ export class EditVehiculoComponent implements OnInit {
       estadoSoat: this.formVehiculo.get("estadoSoat")?.value,
     }
 
-    this.vehiculoService.editVehiculo(this.id, vehiculo)
+    this.vehiculoService.editVehiculo(this._id, vehiculo)
       .subscribe({
         next:  res => {
           console.log(res);
           this.formVehiculo.reset();
-          this.router.navigate(["/vehiculo/list-vehiculos"]);
+
+          if (this._idUsuario === null) {
+            this.router.navigate(["/vehiculo/list-vehiculos"]);
+          } else {
+            this.router.navigate(["/vehiculo/list-vehiculos", this._idUsuario]);
+          }
+          
 
           Swal.fire({
             title: 'Datos del vehiculo ¡Actualizados!',
@@ -63,9 +71,9 @@ export class EditVehiculoComponent implements OnInit {
   }
 
   loadDataForm(){
-    if(this.id !== null){
+    if(this._id !== null){
       
-      this.vehiculoService.getVehiculo(this.id).subscribe(
+      this.vehiculoService.getVehiculo(this._id).subscribe(
         res => {
           this.formVehiculo.setValue({
             placa: res.placa,
@@ -81,7 +89,11 @@ export class EditVehiculoComponent implements OnInit {
   }
 
   volver(){
-    this.router.navigate(["/vehiculo/list-vehiculos"]);
+    if (this._idUsuario === null) {
+      this.router.navigate(["/vehiculo/list-vehiculos"]);
+    } else {
+      this.router.navigate(["/vehiculo/list-vehiculos", this._idUsuario]);
+    }
   }
 
 }
