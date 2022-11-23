@@ -7,6 +7,18 @@ i{
   position: relative;
 }
 
+.tooltip-regresar{
+  position: absolute;
+  display: none;
+  border: 1px solid gray;
+  padding: 2px;
+  background-color: orange;
+  color: white;
+  width: 100px;
+  left: 100%;
+  top: 100%;
+}
+
 .tooltip-agregar{
   position: absolute;
   display: none;
@@ -41,6 +53,10 @@ i{
   width: 100px;
   left: 100%;
   top: 100%;
+}
+
+i:hover .tooltip-regresar{
+  display: block;
 }
 
 i:hover .tooltip-agregar{

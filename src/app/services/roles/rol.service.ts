@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Rol } from 'src/app/models/rol';
 
@@ -7,6 +7,8 @@ import { Rol } from 'src/app/models/rol';
   providedIn: 'root'
 })
 export class RolService {
+
+  rolEmmiter = new EventEmitter<string>();
 
   private URL = "http://localhost:3000/roles/";
 
@@ -31,4 +33,6 @@ export class RolService {
   deleteRol(id: string): Observable<any>{
     return this.http.delete(this.URL + id);
   }
+
+
 }

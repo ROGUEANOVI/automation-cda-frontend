@@ -14,6 +14,8 @@ export class EditSeguroAdicionalComponent implements OnInit {
 
   formSeguroAdicional: FormGroup;
   id: string;
+  _idVehiculo: string;
+
 
   constructor(private fb: FormBuilder , private seguroAdicionalService: SeguroAdicionalService, private router: Router, private aRouter: ActivatedRoute) { 
     this.formSeguroAdicional = this.fb.group({
@@ -21,6 +23,7 @@ export class EditSeguroAdicionalComponent implements OnInit {
       fechaVencimiento: ["", [Validators.required]]
     });
     this.id = this.aRouter.snapshot.paramMap.get("id")!;
+    this._idVehiculo = this.aRouter.snapshot.paramMap.get("idVehiculo")!;
   }
 
   ngOnInit(): void {
@@ -38,7 +41,13 @@ export class EditSeguroAdicionalComponent implements OnInit {
         next:  res => {
           console.log(res);
           this.formSeguroAdicional.reset();
-          this.router.navigate(["/seguro-adicional/list-seguros-adicionales"]);
+
+          if(this._idVehiculo !== null){
+            this.router.navigate(["/seguro-adicional/list-seguros-adicionales", this._idVehiculo]);
+          }
+          else{
+             this.router.navigate(["/seguro-adicional/list-seguros-adicionales"]);
+          }
 
           Swal.fire({
             title: 'Seguro Adicional ¡Actualizado!',
@@ -69,7 +78,11 @@ export class EditSeguroAdicionalComponent implements OnInit {
   }
 
   volver(){
-    this.router.navigate(["/seguro-adicional/list-seguros-adicionales"]);
+    if(this._idVehiculo !== null){
+      this.router.navigate(["/seguro-adicional/list-seguros-adicionales", this._idVehiculo]);
+    }
+    else{
+      this.router.navigate(["/seguro-adicional/list-seguros-adicionales"]);
+    }
   }
-
 }

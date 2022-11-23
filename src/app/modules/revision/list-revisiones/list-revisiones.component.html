@@ -38,14 +38,6 @@
               </tbody>
           </table>
 
-          <h5 *ngIf="listRevisiones.length == 0" class="text-center">No hay revisiones para mostrar</h5>
-
-          <div *ngIf="listRevisiones.length == 0" class="text-center">
-            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
-
         </ng-container>
 
         <ng-template #VehiculoRevision>
@@ -60,6 +52,7 @@
                   <th scope="col">Nivel direccion</th>
                   <th scope="col">idVehiculo</th>
                   <th scope="col">Opciones</th>
+                  <th scope="col">Repuestos</th>
               </tr>
             </thead>
 
@@ -72,7 +65,7 @@
                 <td>{{revision.nivelDireccion}}</td>
                 <td>{{revision.idVehiculo}}</td>
                 <td>
-                  <i [routerLink]="['/vehiculo/list-vehiculos']" class="fa-solid fa-rotate-left text-warning"><span class="tooltip-regresar"> Regresar </span></i>
+                  <i [routerLink]="['/vehiculo/list-vehiculos', revision.idVehiculo]" class="fa-solid fa-rotate-left text-warning"><span class="tooltip-regresar"> Regresar </span></i>
 
                   <i [routerLink]="['/revision/create-revision', _idVehiculo]" class="fa-solid fa-plus text-success" ><span class="tooltip-agregar"> Agregar </span></i>
 
@@ -80,20 +73,31 @@
 
                   <i (click)="deleteRevision(revision._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
                 </td>
+
+                <td>
+                  <!-- <i *ngIf="_rol !== 'PROPIETARIO'" (click)="createRepuesto(_idVehiculo!,revision._id!)" class="fa-solid fa-plus text-success"><span class="tooltip-create-repuesto">Agregar</span></i> -->
+
+                  <i (click)="getListRepuestos(_idVehiculo!, revision._id!)" class="fa-solid fa-screwdriver-wrench text-info"><span class="tooltip-list-repuestos">Lista</span></i>
+                </td>
                 
               </tr>
             </tbody>
 
-        </table>
-        <h5 *ngIf="listRevisionesVehiculo.length == 0" class="text-center">No hay Revisiones de este vehiculo para mostrar</h5>
-
-        <div *ngIf="listRevisionesVehiculo.length == 0" class="text-center">
-          <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-
+          </table>
+      
         </ng-template>
+
+        <h5 *ngIf="(listRevisiones.length == 0) && (listRevisionesVehiculo.length == 0)" class="text-center">No hay repuestos para mostrar</h5>
+
+          <div *ngIf="(listRevisiones.length == 0) && (listRevisionesVehiculo.length == 0)"  class="d-grid gap-2 mt-4">
+            <button type="button" class="btn btn-success btn-lg" (click)="createRevisionVehiculo()">Registrar Revision</button>
+          </div>
+
+          <div *ngIf="(listRevisiones.length !== 0) && (listRevisionesVehiculo.length !== 0)" class="text-center">
+            <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

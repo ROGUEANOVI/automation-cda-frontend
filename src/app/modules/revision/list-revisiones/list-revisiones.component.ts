@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Revision } from 'src/app/models/revision';
 import { RevisionService } from 'src/app/services/revisiones/revision.service';
+import { RolService } from 'src/app/services/roles/rol.service';
 
 @Component({
   selector: 'app-list-revisiones',
@@ -14,13 +15,36 @@ export class ListRevisionesComponent implements OnInit {
   listRevisiones: Revision[] = [];
   listRevisionesVehiculo: Revision[] = [];
   _idVehiculo: string;
+  _rol!: string;
 
-  constructor(private revisionService: RevisionService, private router: Router, private aRouter: ActivatedRoute) {
+  constructor(private revisionService: RevisionService , private rolService: RolService, private router: Router, private aRouter: ActivatedRoute) {
     this._idVehiculo = this.aRouter.snapshot.paramMap.get("idVehiculo")!; 
    }
 
   ngOnInit(): void {
+
+    this.rolService.rolEmmiter.subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this._rol = res;
+        localStorage.setItem("rol", res);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+
     if (this._idVehiculo !== null) {
+      this.rolService.rolEmmiter.subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this._rol = res;
+          localStorage.setItem("rol", res);
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      });
       this.getListRevisionesVehiculo(this._idVehiculo);
     }
     else{
@@ -71,7 +95,7 @@ export class ListRevisionesComponent implements OnInit {
     }); 
   }
 
-  editRevisionVehiculo(_idVehiculo: string, _id: string){
+  editRevisionVehiculo(_idVehiculo: string, _idRevision: string){
     Swal.fire({
       title: 'Editar Revision',
       text: '¿Esta seguro de editar esta revision?',
@@ -81,7 +105,7 @@ export class ListRevisionesComponent implements OnInit {
       icon: 'warning'
     }).then(result => {
       if (result.value) {
-        this.router.navigate(["/revision/edit-revision",_idVehiculo, _id]);
+        this.router.navigate(["/revision/edit-revision",_idVehiculo, _idRevision]);
       }
     }); 
   }
@@ -121,6 +145,42 @@ export class ListRevisionesComponent implements OnInit {
         console.log("No se elimino la revision");
       }
     })
+  }
+
+
+  getListRepuestos( _idVehiculo: string,_idRevision: string){
+    Swal.fire({
+      title: 'Listado De Repuestos',
+      text: '¿Quiere acceder al listado de repuestos de esta revision?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/repuesto/list-repuestos", _idVehiculo,_idRevision]);
+      }
+    }); 
+  }
+
+  createRepuesto(_idVehiculo: string , _idRevision: string){
+    Swal.fire({
+      title: 'Registro De Repuesto',
+      text: '¿Quiere registrar un repuesto de esta revision?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/repuesto/create-repuesto", _idVehiculo,_idRevision]);
+      }
+    }); 
+  }
+
+  createRevisionVehiculo(){
+    const idUsuario = localStorage.getItem("idUsuario");
+    this.router.navigate(["revision/create-revision",this._idVehiculo]);
   }
 
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
+import { UsuarioVehiculoService } from 'src/app/services/usuarios-vehiculos/usuario-vehiculo.service';
 
 @Component({
   selector: 'app-create-vehiculo',
@@ -15,8 +16,10 @@ export class CreateVehiculoComponent implements OnInit {
   formVehiculo: FormGroup;
   vehiculoCreated = new Array<string>();
   formVehiculoDisabled: boolean;
+  _idUsuario!: string;
 
-  constructor(private fb: FormBuilder , private vehiculoService: VehiculoService, private router: Router) {
+
+  constructor(private fb: FormBuilder , private vehiculoService: VehiculoService, private usuarioVehiculoService: UsuarioVehiculoService, private router: Router, private aRouter: ActivatedRoute) {
 
     this.formVehiculo = this.fb.group({
       placa: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7), Validators.pattern('^([A-Z]{3}-[0-9]{3})|([A-Z]{3}-[0-9]{2}[A-Z]{1})+$')]],
@@ -27,9 +30,19 @@ export class CreateVehiculoComponent implements OnInit {
       estadoSoat: ["", [Validators.required, Validators.minLength(7), Validators.maxLength(7)]],
     });
     this.formVehiculoDisabled = false;
+    this._idUsuario = this.aRouter.snapshot.paramMap.get("idUsuario")!;
   }
 
   ngOnInit(): void {
+  }
+
+  handleCreateVehiculo(){
+    if (this._idUsuario === null){
+      this.createVehiculo();
+    }
+    else{
+      this.createUsuarioVehiculo();
+    }
   }
 
   createVehiculo(){
@@ -64,14 +77,15 @@ export class CreateVehiculoComponent implements OnInit {
               this.formVehiculoDisabled = true
             }
 
+            this.router.navigate(["/vehiculo/list-vehiculos"]);
+            
             Swal.fire({
-              title: 'Datos personales ¡Registrados!',
-              text: 'Datos personales registrados con ¡Exito!',
+              title: 'Vehiculo ¡Registrado!',
+              text: 'Vehiculo registrado con ¡Exito!',
               icon: 'success',
               showConfirmButton: true,
             });
             
-            this.router.navigate(["/vehiculo/list-vehiculos"]);
           }
         },
         error: err =>{
@@ -80,7 +94,55 @@ export class CreateVehiculoComponent implements OnInit {
       })
   }
 
+  createUsuarioVehiculo(){
+    const vehiculo: Vehiculo = {
+      placa: this.formVehiculo.get("placa")?.value,
+      marca: this.formVehiculo.get("marca")?.value,
+      modelo: this.formVehiculo.get("modelo")?.value,
+      numeroPasajeros: this.formVehiculo.get("numeroPasajeros")?.value,
+      cilindrajeMotor: this.formVehiculo.get("cilindrajeMotor")?.value,
+      estadoSoat: this.formVehiculo.get("estadoSoat")?.value,
+    }
+
+    this.usuarioVehiculoService.createUsuarioVehiculo(this._idUsuario, vehiculo)
+      .subscribe({
+        next:  res => {
+          console.log(res);
+          this.vehiculoCreated = Object.values(res);
+          console.log(this.vehiculoCreated[0]);
+          this.formVehiculo.reset();
+          this.formVehiculo.disable();
+          if(this.formVehiculo.disabled){
+            this.formVehiculoDisabled = true
+          }
+
+          Swal.fire({
+            title: 'Vehiculo ¡Registrado!',
+            text: 'Vehiculo registrado con ¡Exito!',
+            icon: 'success',
+            showConfirmButton: true,
+          });
+          
+          if(this._idUsuario !== null){
+            this.router.navigate(["/vehiculo/list-vehiculos", this._idUsuario]);
+          }
+          else{
+            this.router.navigate(["/vehiculo/list-vehiculos"]);
+          }
+
+        },
+        error: err =>{
+          console.error(err);
+        }
+      })
+  }
+
   volver(){
-    this.router.navigate(["/vehiculo/list-vehiculos"]);
+    if(this._idUsuario !== null){
+      this.router.navigate(["/vehiculo/list-vehiculos", this._idUsuario]);
+    }
+    else{
+      this.router.navigate(["/vehiculo/list-vehiculos"]);
+    }
   }
 }

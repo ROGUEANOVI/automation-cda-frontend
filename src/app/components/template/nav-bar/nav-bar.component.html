@@ -1,20 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container">
-      <!-- <app-logo></app-logo> -->
     <a class="navbar-brand" routerLink="/inicio"><app-logo></app-logo> AutomationCDA</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" routerLink="/inicio" routerLinkActive="active">Inicio</a>
-        </li>
-        <ng-container *ngIf="validationService.loggedIn()">
-          <li class="nav-item" *ngFor="let menu of listMenus">
-            <a class="nav-link" routerLink="{{menu.patch}}" routerLinkActive="active">{{menu.nombre}}</a>
-          </li>
-        </ng-container>         
+        </li>         
       </ul>
 
       <ul class="navbar-nav ms-auto">
@@ -27,9 +21,25 @@
           </li>
         </ng-container>
         <ng-template #loggedIn>
-          <li class="nav-item" >
-            <a class="nav-link" style="cursor: pointer;" (click)="validationService.logOut()">Cerrar Sesión</a>
-          </li>
+  
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   {{_nombreUsuario}} <i class="fa-solid fa-circle-user"></i> {{_rol}} 
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-dark">
+                  <li *ngFor="let menu of listMenus">
+                    <a class="dropdown-item" routerLink="{{menu.patch}}" routerLinkActive="active">{{menu.nombre}}</a>
+                  </li>
+                  <li class="nav-item" >
+                    <a class="nav-link" style="cursor: pointer;" (click)="validationService.logOut()">Cerrar Sesión</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            
         </ng-template>
       </ul>
     </div>

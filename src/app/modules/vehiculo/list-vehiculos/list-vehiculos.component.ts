@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Vehiculo } from 'src/app/models/vehiculo';
 import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
+import { UsuarioVehiculoService } from 'src/app/services/usuarios-vehiculos/usuario-vehiculo.service';
+import { RolService } from 'src/app/services/roles/rol.service';
 
 
 @Component({
@@ -13,11 +15,35 @@ import { VehiculoService } from 'src/app/services/vehiculos/vehiculo.service';
 export class ListVehiculosComponent implements OnInit {
 
   listVehiculos: Vehiculo[] = [];
+  listVehiculosUsuario: Vehiculo[] = [];
+  _idUsuario!: string ;
+  _nombreUsuario!: string ;
+  _rol!: string;
 
-  constructor( private vehiculoService: VehiculoService, private router: Router) { }
+  constructor( private vehiculoService: VehiculoService,  private usuarioVehiculosService: UsuarioVehiculoService, private rolService: RolService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getListVehiculos();
+    this.handleListVehiculos();
+  }
+
+  handleListVehiculos(){
+    if(localStorage.getItem("idUsuario") === null && localStorage.getItem("rol") === null){
+      
+      this.getListVehiculos();
+    }
+    else{
+      this.getVehiculosUsuario();
+      this.rolService.rolEmmiter.subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this._rol = res;
+          localStorage.setItem("rol", res);
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      });
+    }
   }
 
   getListVehiculos(){
@@ -33,7 +59,23 @@ export class ListVehiculosComponent implements OnInit {
     });
   }
 
-  editVehiculo(_id: string){
+  getVehiculosUsuario(){
+    const idUsuario = localStorage.getItem("idUsuario");
+    this._idUsuario =localStorage.getItem("idUsuario")!;
+    this.usuarioVehiculosService.getUsuarioVehiculos(idUsuario!).subscribe({
+      next: (res) =>{
+        console.log(res);
+        this.listVehiculosUsuario = res;
+      },
+      error: (err) =>{
+        console.log(err);
+      }
+    });
+  }
+
+  
+
+  editVehiculo( _id: string){
     Swal.fire({
       title: 'Editar Vehiculo',
       text: '¿Esta seguro de editar este vehiculo?',
@@ -43,7 +85,23 @@ export class ListVehiculosComponent implements OnInit {
       icon: 'warning'
     }).then(result => {
       if (result.value) {
-        this.router.navigate(["/vehiculo/edit-vehiculo",_id]);
+        this.router.navigate(["/vehiculo/edit-vehiculo", _id]);
+      }
+
+    }); 
+  }
+
+  editVehiculoUsuario( _idUsuario:string, _id: string){
+    Swal.fire({
+      title: 'Editar Vehiculo',
+      text: '¿Esta seguro de editar este vehiculo?',
+      showCancelButton: true,
+      confirmButtonText: 'Si, editar',
+      cancelButtonText: 'Cancelar',
+      icon: 'warning'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/vehiculo/edit-vehiculo", _idUsuario,_id]);
       }
 
     }); 
@@ -109,4 +167,39 @@ export class ListVehiculosComponent implements OnInit {
     }); 
   }
 
+
+  getListSeguros(_id: string){
+    Swal.fire({
+      title: 'Listado De Seguros',
+      text: '¿Quiere acceder al listado de seguros de este vehiculo?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/seguro-adicional/list-seguros-adicionales",_id]);
+      }
+    }); 
+  }
+
+  createSeguro(_id: string){
+    Swal.fire({
+      title: 'Registro De Seguro',
+      text: '¿Quiere registrar un seguro de este vehiculo?',
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'Cancelar',
+      icon: 'info'
+    }).then(result => {
+      if (result.value) {
+        this.router.navigate(["/seguro-adicional/create-seguro-adicional",_id]);
+      }
+    }); 
+  }
+
+  createVehiculoUsuario(){
+    const idUsuario = localStorage.getItem("idUsuario");
+    this.router.navigate(["vehiculo/create-vehiculo",idUsuario]);
+  }
 }

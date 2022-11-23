@@ -4,32 +4,72 @@
       <div class="card">
         <div class="card-body text-center">
           <h2><span class="title">LISTADO DE REPUESTOS</span></h2>
-          <table *ngIf="listRepuestos.length > 0" class="table table-striped mt-4">
-            <thead>
-              <tr>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let repuesto of listRepuestos">
-                <td>{{repuesto.descripcion}}</td>
-                <td>{{repuesto.cantidad}}</td>
-                <td>{{repuesto.precio | currency: '$'}}</td>
-                <td>
-                  <i class="fa-solid fa-plus text-success" routerLink="/repuesto/create-repuesto"><span class="tooltip-agregar"> Agregar </span></i>
-                  <i (click)="editRepuesto(repuesto._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
-                  <i (click)="deleteRepuesto(repuesto._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
-                </td>
-              </tr>
-            </tbody>
-          </table>
 
-          <h5 *ngIf="listRepuestos.length == 0" class="text-center">No hay Repuestos para mostrar</h5>
-          
-          <div *ngIf="listRepuestos.length == 0" class="text-center">
+          <ng-container *ngIf="_idRevision === null; else RepuestoRevision">
+            <table *ngIf="listRepuestos.length > 0" class="table table-striped mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let repuesto of listRepuestos">
+                  <td>{{repuesto.descripcion}}</td>
+                  <td>{{repuesto.cantidad}}</td>
+                  <td>{{repuesto.precio | currency: '$'}}</td>
+                  <td>
+            
+                    <i class="fa-solid fa-plus text-success" routerLink="/repuesto/create-repuesto"><span class="tooltip-agregar"> Agregar </span></i>
+  
+                    <i (click)="editRepuesto(repuesto._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+  
+                    <i (click)="deleteRepuesto(repuesto._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>  
+          </ng-container>
+
+          <ng-template #RepuestoRevision>
+            <table *ngIf="listRepuestosRevision.length > 0" class="table table-striped mt-4">
+              <thead>
+                <tr>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let repuesto of listRepuestosRevision">
+                  <td>{{repuesto.descripcion}}</td>
+                  <td>{{repuesto.cantidad}}</td>
+                  <td>{{repuesto.precio | currency: '$'}}</td>
+                  <td>
+                    <i [routerLink]="['/revision/list-revisiones/',_idVehiculo]" class="fa-solid fa-rotate-left text-warning"><span class="tooltip-regresar"> Regresar </span></i>
+                    
+                    <i class="fa-solid fa-plus text-success" [routerLink]="['/repuesto/create-repuesto', _idVehiculo, _idRevision]"><span class="tooltip-agregar"> Agregar </span></i>
+  
+                    <i (click)="editRepuestoRevision( _idVehiculo!,_idRevision!, repuesto._id!)" class="fa-solid fa-pen-to-square text-primary"> <span class="tooltip-editar"> Editar </span> </i>
+  
+                    <i (click)="deleteRepuesto(repuesto._id!)" class="fa-solid fa-trash text-danger"><span class="tooltip-eliminar"> Eliminar </span></i> 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </ng-template>
+
+          <h5 *ngIf="(listRepuestos.length == 0) && (listRepuestosRevision.length == 0)" class="text-center">No hay repuestos para mostrar</h5>
+
+          <div *ngIf="(listRepuestos.length == 0) && (listRepuestosRevision.length == 0)"  class="d-grid gap-2 mt-4">
+            <button type="button" class="btn btn-success btn-lg" (click)="createRepuestoRevision()">Registrar Repuesto</button>
+          </div>
+
+          <div *ngIf="(listRepuestos.length !== 0) && (listRepuestosRevision.length !== 0)" class="text-center">
             <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;">
               <span class="visually-hidden">Loading...</span>
             </div>

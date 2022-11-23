@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Menu } from 'src/app/models/menu';
 import { MenuService } from 'src/app/services/menus/menu.service';
+import { RolService } from 'src/app/services/roles/rol.service';
 import { ValidationService } from 'src/app/services/validation/validation.service';
 
 @Component({
@@ -11,18 +12,37 @@ import { ValidationService } from 'src/app/services/validation/validation.servic
 export class NavBarComponent implements OnInit {
 
   listMenus = new Array<Menu>();
-  constructor(public validationService: ValidationService, public menuService: MenuService){}
+  _nombreUsuario!: string ;
+  _rol!: string;
+  
+
+  constructor(public validationService: ValidationService, public menuService: MenuService, private rolService: RolService){}
 
   ngOnInit(): void {
-    this.menuService.menuEmmiter.subscribe({
+    
+    this.rolService.rolEmmiter.subscribe({
       next: (res: any) => {
         console.log(res);
-        this.listMenus = res;
+        this._rol = res;
+        localStorage.setItem("rol", res);
       },
       error: (err: any) => {
         console.log(err);
       }
     })
-  }
 
+    this.menuService.menuEmmiter.subscribe({
+      next: (res: any) => {
+        console.log(res);
+        localStorage.setItem("menus", res);
+        
+        this._nombreUsuario = localStorage.getItem("nombreUsuario")!;
+        console.log(this._nombreUsuario);
+        this.listMenus = res;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
 }
