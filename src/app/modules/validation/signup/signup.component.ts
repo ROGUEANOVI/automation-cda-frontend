@@ -148,7 +148,7 @@ export class SignupComponent implements OnInit {
               showConfirmButton: true,
             });
             
-            const token = Object.values(res)[3];
+            const token:any = Object.values(res)[2];
             localStorage.setItem("token", token);
 
             const idUsuario:any = Object.values(Object.values(res)[0])[0];
@@ -159,8 +159,6 @@ export class SignupComponent implements OnInit {
 
             const idRol:any = Object.values(Object.values(res)[0])[4];
             localStorage.setItem("idRol", idRol);
-
-            // this.setRol(idRol);
 
             this.rolService.getRol(idRol).subscribe({
               next: (res) => {
@@ -176,7 +174,6 @@ export class SignupComponent implements OnInit {
               }
             });
 
-            // this.router.navigate(["/vehiculo/list-vehiculos", idUsuario]);
           }
           
         },
@@ -185,21 +182,6 @@ export class SignupComponent implements OnInit {
         }
       })
   }
-
-  // setRol(id: string){
-  //   this.rolService.getRol(id).subscribe({
-  //     next: (res) => {
-  //       const rol = Object.values(res)[1];
-  //       console.log("rol:", rol);
-  //       localStorage.setItem("rol", rol);
-  //       this.rolService.rolEmmiter.emit(rol);
-  //       this.generateMenus(rol);
-  //     },
-  //     error: (err) => {
-  //       console.log(err); 
-  //     }
-  //   });
-  // }
 
   generateMenus(rol: string){
     const menus = new Array<Menu>();
@@ -245,5 +227,4 @@ export class SignupComponent implements OnInit {
     }
     return []
   }  
-
 }

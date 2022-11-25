@@ -45,8 +45,9 @@ export class LoginComponent implements OnInit {
             icon: 'success',
             showConfirmButton: true,
           });
-          console.log(res);
-          const token = Object.values(res)[3];
+          console.log(Object.values(res));
+          
+          const token:any = Object.values(res)[2];
           localStorage.setItem("token", token);
 
           const idUsuario:any = Object.values(Object.values(res)[0])[0];
@@ -57,8 +58,6 @@ export class LoginComponent implements OnInit {
 
           const idRol:any = Object.values(Object.values(res)[0])[4];
           localStorage.setItem("idRol", idRol);
-
-          // this.setRol(idRol);
 
           this.rolService.getRol(idRol).subscribe({
             next: (res) => {
@@ -73,9 +72,6 @@ export class LoginComponent implements OnInit {
               console.log(err); 
             }
           });
-
-          // this.router.navigate(["/vehiculo/list-vehiculos", idUsuario]);
-          
         },
         error: err =>{
           console.error(err);
@@ -88,22 +84,6 @@ export class LoginComponent implements OnInit {
         }
       })
   }
-
-  // setRol(id: string){
-  //   this.rolService.getRol(id).subscribe({
-  //     next: (res) => {
-  //       const rol = Object.values(res)[1];
-  //       console.log("rol:", rol);
-  //       localStorage.setItem("rol", rol);
-  //       this.rolService.rolEmmiter.emit(rol);
-  //       this.generateMenus(rol);
-  //     },
-  //     error: (err) => {
-  //       console.log(err); 
-  //     }
-  //   });
-  // }
-
 
   generateMenus(rol: string){
     const menus = new Array<Menu>();
